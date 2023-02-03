@@ -1,0 +1,13 @@
+{
+    "default": {
+        "paths": [
+            "src/**/*.feature"
+        ],
+        "require": [
+            "tests/UseCase/**/*.ts"
+        ],
+        "requireModule": [
+            "ts-node/register"
+        ]
+    }
+}
