@@ -7,11 +7,13 @@
         "start": "ts-node src/bootstrap.ts",
         "build": "tsc --build",
         "clean": "tsc --build --clean",
-        "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'tests/**/*.ts'"
+        "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'tests/**/*.ts'",
+        "test:use-case": "cucumber-js --config=\"./tests/UseCase/cucumber.config.json\""
     },
     "author": "",
     "license": "ISC",
     "devDependencies": {
+        "@cucumber/cucumber": "^8.10.0",
         "@types/chai": "^4.3.4",
         "@types/mocha": "^10.0.1",
         "chai": "^4.3.7",
