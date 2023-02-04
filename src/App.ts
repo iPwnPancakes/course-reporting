@@ -13,11 +13,19 @@ export class App {
         return handler.handle(request);
     }
 
-    login() {
+    login(username: string, password: string) {
 
     }
 
     listAllStudents(): string[] {
-        return ["Greg"];
+        return ['Greg'];
+    }
+
+    logout() {
+
+    }
+
+    whoAmI() {
+        return 'Daniel';
     }
 }

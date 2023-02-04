@@ -4,7 +4,7 @@ import { App } from '../../../src/App';
 
 Given('I am a Teacher', function () {
     const app: App = this.app;
-    app.login();
+    app.login('', '');
 });
 
 When('I go to register a new Student named {string}', function (name: string) {
