@@ -1,0 +1,10 @@
+{
+    "default": {
+        "require": [
+            "src/**/*.step.ts"
+        ],
+        "requireModule": [
+            "ts-node/register"
+        ]
+    }
+}
