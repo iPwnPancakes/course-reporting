@@ -4,5 +4,5 @@ import { CompositionRoot } from '../../../src/Shared/Application/CompositionRoot
 
 Before(function () {
     const compositionRoot = new CompositionRoot();
-    this.app = new App(compositionRoot.makeCurrentUserRepository());
+    this.app = new App(compositionRoot);
 });

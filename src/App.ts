@@ -1,9 +1,13 @@
-import { CreateStudentCommand } from './Modules/Students/Commands/CreateStudent/CreateStudentCommand';
 import { CreateStudentRequest } from './Modules/Students/Commands/CreateStudent/CreateStudentRequest';
+import { CompositionRoot } from './Shared/Application/CompositionRoot/CompositionRoot';
 import { InMemoryCurrentUserRepository } from './Modules/Authentication/Repositories/InMemoryCurrentUserRepository';
 
 export class App {
-    constructor(private readonly currentUserRepo: InMemoryCurrentUserRepository) {
+
+    private readonly currentUserRepo: InMemoryCurrentUserRepository;
+
+    constructor(private readonly compositionRoot: CompositionRoot) {
+        this.currentUserRepo = compositionRoot.makeCurrentUserRepository();
     }
 
     public start() {
@@ -12,7 +16,7 @@ export class App {
 
     public createStudent(name: string) {
         const request: CreateStudentRequest = { name };
-        const handler = new CreateStudentCommand();
+        const handler = this.compositionRoot.makeCreateStudentCommand();
 
         return handler.handle(request);
     }
