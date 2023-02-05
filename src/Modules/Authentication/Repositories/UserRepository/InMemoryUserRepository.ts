@@ -1,4 +1,6 @@
-export class InMemoryUserRepository {
+import { IUserRepository } from './IUserRepository';
+
+export class InMemoryUserRepository implements IUserRepository {
     constructor(private arr: string[] = []) {
     }
 

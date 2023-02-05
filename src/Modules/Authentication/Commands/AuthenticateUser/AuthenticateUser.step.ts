@@ -1,7 +1,7 @@
 import { Given, Then, When } from '@cucumber/cucumber';
 import { expect } from 'chai';
 import { AuthenticateUserCommand } from './AuthenticateUserCommand';
-import { InMemoryUserRepository } from '../../Repositories/InMemoryUserRepository';
+import { InMemoryUserRepository } from '../../Repositories/UserRepository/InMemoryUserRepository';
 
 const userRepo = new InMemoryUserRepository();
 const useCase = new AuthenticateUserCommand(userRepo);
