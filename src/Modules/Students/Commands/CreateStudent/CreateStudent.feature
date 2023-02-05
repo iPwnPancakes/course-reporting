@@ -10,6 +10,7 @@ Feature: Create Student
             | Greg   |
             | Daniel |
 
+    @SkipWhenUseCaseTesting
     Scenario Outline: Teacher needs to specify a valid name
         Given I am a Teacher
         When I go to register a new Student named <name>
