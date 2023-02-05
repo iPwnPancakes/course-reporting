@@ -1,5 +1,3 @@
-import { CommandRequest } from './CommandRequest';
-
-export interface CommandHandler<T> {
-    handle(request: CommandRequest): T;
+export interface CommandHandler<RequestType, ResponseType> {
+    handle(request: RequestType): ResponseType;
 }
