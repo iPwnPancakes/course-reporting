@@ -2,25 +2,25 @@ import { Given, Then, When } from '@cucumber/cucumber';
 import { App } from '../../../src/App';
 import { expect } from 'chai';
 
-Given('I have not authenticated myself', function () {
+Given('I have not authenticated myself yet', function () {
     const app: App = this.app;
 
     app.logout();
 });
 
-Given('{string} is registered within the system with the password {string}', function (username: string, password: string) {
+Given(/a Teacher by the name of (.*) exists/, function (username: string) {
     const app: App = this.app;
 
-    app.logout();
+    app.createTeacher(username);
 });
 
-When('I go to authenticate myself as {string} with password {string}', function (username: string, password: string) {
+When(/^I go to authenticate myself as (.*)$/, function (username: string) {
     const app: App = this.app;
 
-    app.login(username, password);
+    app.login(username);
 });
 
-Then('I should be authenticated as {string}', function (username: string) {
+Then(/I should be authenticated as (.*)/, function (username: string) {
     const app: App = this.app;
 
     const loggedInAs: string = app.whoAmI();

@@ -13,8 +13,8 @@ export class App {
         return handler.handle(request);
     }
 
-    login(username: string, password: string) {
-
+    login(username: string) {
+        return;
     }
 
     listAllStudents(): string[] {
@@ -27,5 +27,9 @@ export class App {
 
     whoAmI() {
         return 'Daniel';
+    }
+
+    createTeacher(username: string) {
+
     }
 }
