@@ -1,8 +1,5 @@
 {
     "default": {
-        "paths": [
-            "src/**/*.feature"
-        ],
         "require": [
             "tests/UseCase/**/*.ts"
         ],
