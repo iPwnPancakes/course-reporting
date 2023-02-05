@@ -17,5 +17,6 @@ Feature: Create Student
         Then I should NOT see <name> in the Student List
 
         Examples:
-            | name |
-            |      |
+            | name   |
+            |        |
+            | Dani3l |
