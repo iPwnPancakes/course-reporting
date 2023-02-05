@@ -1,4 +1,7 @@
 import { App } from './App';
+import { CompositionRoot } from './Shared/Application/CompositionRoot/CompositionRoot';
 
-const app = new App();
+const compositionRoot = new CompositionRoot();
+const app = new App(compositionRoot.makeCurrentUserRepository());
+
 app.start();

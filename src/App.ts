@@ -1,8 +1,12 @@
 import { CreateStudentCommand } from './Modules/Students/Commands/CreateStudent/CreateStudentCommand';
 import { CreateStudentRequest } from './Modules/Students/Commands/CreateStudent/CreateStudentRequest';
+import { InMemoryCurrentUserRepository } from './Modules/Authentication/Repositories/InMemoryCurrentUserRepository';
 
 export class App {
     private currentUser: string | null = null;
+
+    constructor(private readonly currentUserRepo: InMemoryCurrentUserRepository) {
+    }
 
     public start() {
         console.log('hello world');
