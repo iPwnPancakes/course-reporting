@@ -9,3 +9,4 @@ Feature: Authenticate User
         Examples:
             | user   |
             | Daniel |
+            | Bob    |

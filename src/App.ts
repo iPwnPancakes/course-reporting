@@ -2,6 +2,8 @@ import { CreateStudentCommand } from './Modules/Students/Commands/CreateStudent/
 import { CreateStudentRequest } from './Modules/Students/Commands/CreateStudent/CreateStudentRequest';
 
 export class App {
+    private currentUser: string | null = null;
+
     public start() {
         console.log('hello world');
     }
@@ -14,7 +16,7 @@ export class App {
     }
 
     login(username: string) {
-        return;
+        this.currentUser = username;
     }
 
     listAllStudents(): string[] {
@@ -25,8 +27,8 @@ export class App {
 
     }
 
-    whoAmI() {
-        return 'Daniel';
+    whoAmI(): string | null {
+        return this.currentUser;
     }
 
     createTeacher(username: string) {
