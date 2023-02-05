@@ -18,3 +18,10 @@ Then(/I should see (.*) in the Student List/, function (name: string) {
 
     expect(studentList).to.contain(name);
 });
+
+Then(/I should NOT see (.*) in the Student List/, function (name: string) {
+    const app: App = this.app;
+    const studentList = app.listAllStudents();
+
+    expect(studentList).to.not.contain(name);
+});
