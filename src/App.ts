@@ -3,8 +3,6 @@ import { CreateStudentRequest } from './Modules/Students/Commands/CreateStudent/
 import { InMemoryCurrentUserRepository } from './Modules/Authentication/Repositories/InMemoryCurrentUserRepository';
 
 export class App {
-    private currentUser: string | null = null;
-
     constructor(private readonly currentUserRepo: InMemoryCurrentUserRepository) {
     }
 
@@ -20,7 +18,7 @@ export class App {
     }
 
     login(username: string) {
-        this.currentUser = username;
+        this.currentUserRepo.setCurrentUser(username);
     }
 
     listAllStudents(): string[] {
@@ -32,7 +30,7 @@ export class App {
     }
 
     whoAmI(): string | null {
-        return this.currentUser;
+        return this.currentUserRepo.getCurrentUser();
     }
 
     createTeacher(username: string) {
