@@ -1,8 +1,8 @@
 import { Users } from '../Contracts/Users';
-import { InMemoryUserRepository } from '../Repositories/InMemoryUserRepository';
+import { IUserRepository } from '../Repositories/UserRepository/IUserRepository';
 
 export class UsersFacade implements Users {
-    constructor(private readonly userRepo: InMemoryUserRepository) {
+    constructor(private readonly userRepo: IUserRepository) {
     }
 
     doesUserExist(name: string): boolean {

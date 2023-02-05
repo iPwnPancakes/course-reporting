@@ -1,9 +1,10 @@
-import { InMemoryUserRepository } from '../Repositories/InMemoryUserRepository';
+import { InMemoryUserRepository } from '../Repositories/UserRepository/InMemoryUserRepository';
 import { UsersFacade } from './UsersFacade';
 import { expect } from 'chai';
+import { IUserRepository } from '../Repositories/UserRepository/IUserRepository';
 
 describe('UsersFacade', function () {
-    let userRepo = new InMemoryUserRepository();
+    let userRepo: IUserRepository = new InMemoryUserRepository();
     let facade = new UsersFacade(userRepo);
 
     beforeEach(() => {
@@ -25,6 +26,24 @@ describe('UsersFacade', function () {
     describe('registerUser', function () {
         it('should return true if user facade accepts name', () => {
             expect(facade.registerUser('Daniel')).to.equal(true);
+        });
+
+        it('should return false if user facade throws for any reason', () => {
+            userRepo = {
+                addUser: (name) => {
+                    throw new Error('DB is down :(');
+                },
+                getIfExists(name: string): string | null {
+                    return null;
+                },
+                getNumberOfUsers(): Number {
+                    return 0;
+                }
+            };
+
+            facade = new UsersFacade(userRepo);
+
+            expect(facade.registerUser('Daniel')).to.equal(false);
         });
     });
 });
