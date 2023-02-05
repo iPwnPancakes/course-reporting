@@ -1,7 +1,7 @@
 {
     "default": {
         "require": [
-            "tests/UseCase/**/*.ts"
+            "tests/Acceptance/**/*.ts"
         ],
         "requireModule": [
             "ts-node/register"
