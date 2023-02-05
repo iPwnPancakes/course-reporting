@@ -1,5 +1,6 @@
 Feature: Authenticate User
 
+    @SkipWhenUseCaseTesting
     Scenario Outline: People can authenticate themselves
         Given I have not authenticated myself yet
         And a Teacher by the name of <user> exists
