@@ -20,5 +20,9 @@ describe('InMemoryCurrentUserRepository', () => {
             repo.setCurrentUser('Daniel');
             expect(repo.getCurrentUser()).to.equal('Daniel');
         });
+
+        it('returns null if no user has been set', () => {
+            expect(repo.getCurrentUser()).to.equal(null);
+        });
     });
 });
