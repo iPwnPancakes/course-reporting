@@ -6,5 +6,6 @@ Feature: Create Student
         Then I should see <name> in the Student List
 
         Examples:
-            | name |
-            | Greg |
+            | name   |
+            | Greg   |
+            | Daniel |

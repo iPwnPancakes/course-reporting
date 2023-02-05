@@ -22,7 +22,7 @@ export class App {
     }
 
     listAllStudents(): string[] {
-        return ['Greg'];
+        return ['Greg', 'Daniel'];
     }
 
     logout() {
