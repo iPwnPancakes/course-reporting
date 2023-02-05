@@ -1,6 +1,5 @@
 import { CommandRequest } from './CommandRequest';
-import { CommandResponse } from './CommandResponse';
 
-export interface CommandHandler {
-    handle(request: CommandRequest): CommandResponse;
+export interface CommandHandler<T> {
+    handle(request: CommandRequest): T;
 }
