@@ -11,7 +11,7 @@ Given('I have not authenticated myself yet', function () {
 });
 
 Given(/a Teacher by the name of (.*) exists/, function (name: string) {
-    userRepo.addUser(name);
+    userRepo.addStudent(name);
 });
 
 When(/^I go to authenticate myself as (.*)$/, function (name: string) {

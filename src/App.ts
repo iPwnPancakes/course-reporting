@@ -29,7 +29,7 @@ export class App {
     }
 
     listAllStudents(): string[] {
-        return this.userRepo.getAllUsers();
+        return this.userRepo.getAllStudents();
     }
 
     logout() {

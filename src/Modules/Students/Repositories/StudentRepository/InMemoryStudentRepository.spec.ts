@@ -9,49 +9,49 @@ describe('InMemoryUserRepository', function () {
         repo = new InMemoryStudentRepository([]);
     });
 
-    describe('getting a user', function () {
+    describe('getting a student', function () {
         it('should return "Daniel" if they exist', function () {
             repo = new InMemoryStudentRepository(['Daniel']);
 
-            const user = repo.getIfExists('Daniel');
+            const student = repo.getIfExists('Daniel');
 
-            expect(user).to.equal('Daniel');
+            expect(student).to.equal('Daniel');
         });
     });
 
-    describe('adding users', function () {
+    describe('adding students', function () {
         it('should accept "Lars"', function () {
-            repo.addUser('Lars');
+            repo.addStudent('Lars');
 
             expect(repo.getIfExists('Lars')).to.equal('Lars');
         });
     });
 
-    describe('adding duplicate users', function () {
+    describe('adding duplicate students', function () {
         it('should not add "Frank" if they already exist', function () {
             repo = new InMemoryStudentRepository(['Frank']);
 
-            expect(repo.getNumberOfUsers()).to.equal(1);
+            expect(repo.getNumberOfStudents()).to.equal(1);
         });
     });
 
-    describe('getting all users', function () {
-        it('should return all initial users', () => {
+    describe('getting all students', function () {
+        it('should return all initial students', () => {
             repo = new InMemoryStudentRepository();
-            repo.addUser('Abigail');
-            repo.addUser('Lars');
+            repo.addStudent('Abigail');
+            repo.addStudent('Lars');
 
-            expect(repo.getAllUsers()).to.contain('Abigail');
-            expect(repo.getAllUsers()).to.contain('Lars');
+            expect(repo.getAllStudents()).to.contain('Abigail');
+            expect(repo.getAllStudents()).to.contain('Lars');
         })
 
-        it('should return all users added', () => {
+        it('should return all students added', () => {
             repo = new InMemoryStudentRepository();
-            repo.addUser('Daniel');
-            repo.addUser('Miguel');
+            repo.addStudent('Daniel');
+            repo.addStudent('Miguel');
 
-            expect(repo.getAllUsers()).to.contain('Daniel');
-            expect(repo.getAllUsers()).to.contain('Miguel');
+            expect(repo.getAllStudents()).to.contain('Daniel');
+            expect(repo.getAllStudents()).to.contain('Miguel');
         });
     });
 });

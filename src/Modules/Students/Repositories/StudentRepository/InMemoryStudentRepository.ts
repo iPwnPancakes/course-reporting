@@ -14,7 +14,7 @@ export class InMemoryStudentRepository implements IStudentRepository {
         return this.arr[index];
     }
 
-    addUser(name: string): void {
+    addStudent(name: string): void {
         const index = this.arr.indexOf(name);
 
         if (index === -1) {
@@ -22,11 +22,11 @@ export class InMemoryStudentRepository implements IStudentRepository {
         }
     }
 
-    getNumberOfUsers(): Number {
+    getNumberOfStudents(): Number {
         return this.arr.length;
     }
 
-    getAllUsers(): string[] {
+    getAllStudents(): string[] {
         return this.arr;
     }
 }

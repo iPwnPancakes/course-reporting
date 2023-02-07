@@ -1,9 +1,9 @@
 export interface IStudentRepository {
     getIfExists(name: string): string | null;
 
-    addUser(name: string): void;
+    addStudent(name: string): void;
 
-    getNumberOfUsers(): Number;
+    getNumberOfStudents(): Number;
 
-    getAllUsers(): string[];
+    getAllStudents(): string[];
 }

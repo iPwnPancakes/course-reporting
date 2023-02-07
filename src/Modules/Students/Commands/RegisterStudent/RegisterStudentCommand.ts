@@ -17,7 +17,7 @@ export class RegisterStudentCommand implements CommandHandler<RegisterStudentReq
             return false;
         }
 
-        this.studentRepo.addUser(request.name);
+        this.studentRepo.addStudent(request.name);
         return true;
     }
 }
