@@ -2,7 +2,7 @@ import { Given, Then, When } from '@cucumber/cucumber';
 import { RegisterStudentCommand } from './RegisterStudentCommand';
 import { expect } from 'chai';
 import { UsersFacade } from '../../../Authentication/Services/UsersFacade';
-import { InMemoryUserRepository } from '../../../Authentication/Repositories/UserRepository/InMemoryUserRepository';
+import { InMemoryUserRepository } from '../../Repositories/UserRepository/InMemoryUserRepository';
 
 const userRepo = new InMemoryUserRepository();
 const fakeUserFacade = new UsersFacade(userRepo);

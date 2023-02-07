@@ -1,7 +1,7 @@
-import { InMemoryUserRepository } from '../Repositories/UserRepository/InMemoryUserRepository';
+import { InMemoryUserRepository } from '../../Students/Repositories/UserRepository/InMemoryUserRepository';
 import { UsersFacade } from './UsersFacade';
 import { expect } from 'chai';
-import { IUserRepository } from '../Repositories/UserRepository/IUserRepository';
+import { IUserRepository } from '../../Students/Repositories/UserRepository/IUserRepository';
 
 describe('UsersFacade', function () {
     let userRepo: IUserRepository = new InMemoryUserRepository();

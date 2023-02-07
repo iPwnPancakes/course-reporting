@@ -1,5 +1,5 @@
 import { Users } from '../Contracts/Users';
-import { IUserRepository } from '../Repositories/UserRepository/IUserRepository';
+import { IUserRepository } from '../../Students/Repositories/UserRepository/IUserRepository';
 
 export class UsersFacade implements Users {
     constructor(private readonly userRepo: IUserRepository) {

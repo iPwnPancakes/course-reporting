@@ -1,7 +1,7 @@
 import { RegisterStudentRequest } from './Modules/Students/Commands/RegisterStudent/RegisterStudentRequest';
 import { CompositionRoot } from './Shared/Application/CompositionRoot/CompositionRoot';
 import { InMemoryCurrentUserRepository } from './Modules/Authentication/Repositories/InMemoryCurrentUserRepository';
-import { IUserRepository } from './Modules/Authentication/Repositories/UserRepository/IUserRepository';
+import { IUserRepository } from './Modules/Students/Repositories/UserRepository/IUserRepository';
 
 export class App {
 

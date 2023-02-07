@@ -4,10 +4,10 @@ import {
 import { RegisterStudentCommand } from '../../../Modules/Students/Commands/RegisterStudent/RegisterStudentCommand';
 import { UsersFacade } from '../../../Modules/Authentication/Services/UsersFacade';
 import { Users } from '../../../Modules/Authentication/Contracts/Users';
-import { IUserRepository } from '../../../Modules/Authentication/Repositories/UserRepository/IUserRepository';
+import { IUserRepository } from '../../../Modules/Students/Repositories/UserRepository/IUserRepository';
 import {
     InMemoryUserRepository
-} from '../../../Modules/Authentication/Repositories/UserRepository/InMemoryUserRepository';
+} from '../../../Modules/Students/Repositories/UserRepository/InMemoryUserRepository';
 
 export class CompositionRoot {
     private userRepo: IUserRepository | null = null;
