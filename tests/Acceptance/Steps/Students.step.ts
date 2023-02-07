@@ -7,7 +7,7 @@ Given('I am a Teacher', function () {
     app.login('');
 });
 
-When(/I go to register a new Student named (.*)/, function (name: string) {
+When(/I go to register a new Student named (.*) with email (.*)/, function (name: string, email: string) {
     const app: App = this.app;
     app.createStudent(name);
 });
