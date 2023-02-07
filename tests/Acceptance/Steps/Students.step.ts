@@ -9,7 +9,7 @@ Given('I am a Teacher', function () {
 
 When(/I go to register a new Student named (.*) with email (.*)/, function (name: string, email: string) {
     const app: App = this.app;
-    app.createStudent(name);
+    app.createStudent(name, email);
 });
 
 Then(/I should see (.*) in the Student List/, function (name: string) {

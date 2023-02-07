@@ -12,6 +12,11 @@ export class RegisterStudentCommand implements CommandHandler<RegisterStudentReq
             return false;
         }
 
+        const validEmailRegex = /^\S+@\S+$/;
+        if (!validEmailRegex.test(request.email)) {
+            return false;
+        }
+
         return this.userService.registerUser(request.name);
     }
 }

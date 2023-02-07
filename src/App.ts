@@ -1,21 +1,24 @@
 import { RegisterStudentRequest } from './Modules/Students/Commands/RegisterStudent/RegisterStudentRequest';
 import { CompositionRoot } from './Shared/Application/CompositionRoot/CompositionRoot';
 import { InMemoryCurrentUserRepository } from './Modules/Authentication/Repositories/InMemoryCurrentUserRepository';
+import { IUserRepository } from './Modules/Authentication/Repositories/UserRepository/IUserRepository';
 
 export class App {
 
     private readonly currentUserRepo: InMemoryCurrentUserRepository;
+    private readonly userRepo: IUserRepository;
 
     constructor(private readonly compositionRoot: CompositionRoot) {
         this.currentUserRepo = compositionRoot.makeCurrentUserRepository();
+        this.userRepo = compositionRoot.makeUserRepository();
     }
 
     public start() {
         console.log('hello world');
     }
 
-    public createStudent(name: string) {
-        const request: RegisterStudentRequest = { name };
+    public createStudent(name: string, email: string) {
+        const request: RegisterStudentRequest = { name, email };
         const handler = this.compositionRoot.makeRegisterStudentCommand();
 
         return handler.handle(request);
@@ -26,7 +29,7 @@ export class App {
     }
 
     listAllStudents(): string[] {
-        return ['Greg', 'Daniel'];
+        return this.userRepo.getAllUsers();
     }
 
     logout() {

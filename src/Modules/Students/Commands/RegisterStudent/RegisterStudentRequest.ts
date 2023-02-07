@@ -2,4 +2,5 @@ import { CommandRequest } from '../../../../Shared/Application/Command/CommandRe
 
 export interface RegisterStudentRequest extends CommandRequest {
     name: string;
+    email: string;
 }

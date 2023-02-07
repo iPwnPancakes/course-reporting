@@ -38,6 +38,9 @@ describe('UsersFacade', function () {
                 },
                 getNumberOfUsers(): Number {
                     return 0;
+                },
+                getAllUsers(): string[] {
+                    return [];
                 }
             };
 

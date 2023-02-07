@@ -14,7 +14,7 @@ Given('I am a Teacher', function () {
 });
 
 When(/I go to register a new Student named (.*) with email (.*)/, function (name: string, email: string) {
-    response = useCase.handle({ name });
+    response = useCase.handle({ name, email });
 });
 
 Then(/I should see (.*) in the Student List/, function (name: string) {

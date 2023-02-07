@@ -10,6 +10,8 @@ import {
 } from '../../../Modules/Authentication/Repositories/UserRepository/InMemoryUserRepository';
 
 export class CompositionRoot {
+    private userRepo: IUserRepository | null = null;
+
     public makeCurrentUserRepository(): InMemoryCurrentUserRepository {
         return new InMemoryCurrentUserRepository();
     }
@@ -18,11 +20,15 @@ export class CompositionRoot {
         return new RegisterStudentCommand(this.makeUserService());
     }
 
-    private makeUserService(): Users {
-        return new UsersFacade(this.makeUserRepository());
+    public makeUserRepository(): IUserRepository {
+        if (!this.userRepo) {
+            this.userRepo = new InMemoryUserRepository();
+        }
+
+        return this.userRepo;
     }
 
-    private makeUserRepository(): IUserRepository {
-        return new InMemoryUserRepository();
+    private makeUserService(): Users {
+        return new UsersFacade(this.makeUserRepository());
     }
 }
