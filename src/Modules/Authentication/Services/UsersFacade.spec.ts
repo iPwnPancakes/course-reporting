@@ -1,14 +1,14 @@
-import { InMemoryUserRepository } from '../../Students/Repositories/UserRepository/InMemoryUserRepository';
+import { InMemoryStudentRepository } from '../../Students/Repositories/StudentRepository/InMemoryStudentRepository';
 import { UsersFacade } from './UsersFacade';
 import { expect } from 'chai';
-import { IUserRepository } from '../../Students/Repositories/UserRepository/IUserRepository';
+import { IStudentRepository } from '../../Students/Repositories/StudentRepository/IStudentRepository';
 
 describe('UsersFacade', function () {
-    let userRepo: IUserRepository = new InMemoryUserRepository();
+    let userRepo: IStudentRepository = new InMemoryStudentRepository();
     let facade = new UsersFacade(userRepo);
 
     beforeEach(() => {
-        userRepo = new InMemoryUserRepository();
+        userRepo = new InMemoryStudentRepository();
         facade = new UsersFacade(userRepo);
     });
 

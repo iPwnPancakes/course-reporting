@@ -1,4 +1,4 @@
-export interface IUserRepository {
+export interface IStudentRepository {
     getIfExists(name: string): string | null;
 
     addUser(name: string): void;

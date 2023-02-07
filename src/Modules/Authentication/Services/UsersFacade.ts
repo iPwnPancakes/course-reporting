@@ -1,8 +1,8 @@
 import { Users } from '../Contracts/Users';
-import { IUserRepository } from '../../Students/Repositories/UserRepository/IUserRepository';
+import { IStudentRepository } from '../../Students/Repositories/StudentRepository/IStudentRepository';
 
 export class UsersFacade implements Users {
-    constructor(private readonly userRepo: IUserRepository) {
+    constructor(private readonly userRepo: IStudentRepository) {
     }
 
     doesUserExist(name: string): boolean {

@@ -1,12 +1,12 @@
 import { RegisterStudentRequest } from './Modules/Students/Commands/RegisterStudent/RegisterStudentRequest';
 import { CompositionRoot } from './Shared/Application/CompositionRoot/CompositionRoot';
 import { InMemoryCurrentUserRepository } from './Modules/Authentication/Repositories/InMemoryCurrentUserRepository';
-import { IUserRepository } from './Modules/Students/Repositories/UserRepository/IUserRepository';
+import { IStudentRepository } from './Modules/Students/Repositories/StudentRepository/IStudentRepository';
 
 export class App {
 
     private readonly currentUserRepo: InMemoryCurrentUserRepository;
-    private readonly userRepo: IUserRepository;
+    private readonly userRepo: IStudentRepository;
 
     constructor(private readonly compositionRoot: CompositionRoot) {
         this.currentUserRepo = compositionRoot.makeCurrentUserRepository();

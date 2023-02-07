@@ -4,13 +4,13 @@ import {
 import { RegisterStudentCommand } from '../../../Modules/Students/Commands/RegisterStudent/RegisterStudentCommand';
 import { UsersFacade } from '../../../Modules/Authentication/Services/UsersFacade';
 import { Users } from '../../../Modules/Authentication/Contracts/Users';
-import { IUserRepository } from '../../../Modules/Students/Repositories/UserRepository/IUserRepository';
+import { IStudentRepository } from '../../../Modules/Students/Repositories/StudentRepository/IStudentRepository';
 import {
-    InMemoryUserRepository
-} from '../../../Modules/Students/Repositories/UserRepository/InMemoryUserRepository';
+    InMemoryStudentRepository
+} from '../../../Modules/Students/Repositories/StudentRepository/InMemoryStudentRepository';
 
 export class CompositionRoot {
-    private userRepo: IUserRepository | null = null;
+    private userRepo: IStudentRepository | null = null;
 
     public makeCurrentUserRepository(): InMemoryCurrentUserRepository {
         return new InMemoryCurrentUserRepository();
@@ -20,9 +20,9 @@ export class CompositionRoot {
         return new RegisterStudentCommand(this.makeUserService());
     }
 
-    public makeUserRepository(): IUserRepository {
+    public makeUserRepository(): IStudentRepository {
         if (!this.userRepo) {
-            this.userRepo = new InMemoryUserRepository();
+            this.userRepo = new InMemoryStudentRepository();
         }
 
         return this.userRepo;
