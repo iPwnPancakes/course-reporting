@@ -9,7 +9,7 @@ describe('InMemoryUserRepository', function () {
         repo = new InMemoryUserRepository([]);
     });
 
-    describe('getting all users', function () {
+    describe('getting a user', function () {
         it('should return "Daniel" if they exist', function () {
             repo = new InMemoryUserRepository(['Daniel']);
 
@@ -32,6 +32,26 @@ describe('InMemoryUserRepository', function () {
             repo = new InMemoryUserRepository(['Frank']);
 
             expect(repo.getNumberOfUsers()).to.equal(1);
+        });
+    });
+
+    describe('getting all users', function () {
+        it('should return all initial users', () => {
+            repo = new InMemoryUserRepository();
+            repo.addUser('Abigail');
+            repo.addUser('Lars');
+
+            expect(repo.getAllUsers()).to.contain('Abigail');
+            expect(repo.getAllUsers()).to.contain('Lars');
+        })
+
+        it('should return all users added', () => {
+            repo = new InMemoryUserRepository();
+            repo.addUser('Daniel');
+            repo.addUser('Miguel');
+
+            expect(repo.getAllUsers()).to.contain('Daniel');
+            expect(repo.getAllUsers()).to.contain('Miguel');
         });
     });
 });

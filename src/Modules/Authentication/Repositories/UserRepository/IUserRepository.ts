@@ -4,4 +4,6 @@ export interface IUserRepository {
     addUser(name: string): void;
 
     getNumberOfUsers(): Number;
+
+    getAllUsers(): string[];
 }

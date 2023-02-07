@@ -25,4 +25,8 @@ export class InMemoryUserRepository implements IUserRepository {
     getNumberOfUsers(): Number {
         return this.arr.length;
     }
+
+    getAllUsers(): string[] {
+        return this.arr;
+    }
 }
