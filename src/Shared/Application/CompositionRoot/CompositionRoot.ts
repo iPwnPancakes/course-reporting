@@ -1,7 +1,7 @@
 import {
     InMemoryCurrentUserRepository
 } from '../../../Modules/Authentication/Repositories/InMemoryCurrentUserRepository';
-import { CreateStudentCommand } from '../../../Modules/Students/Commands/CreateStudent/CreateStudentCommand';
+import { RegisterStudentCommand } from '../../../Modules/Students/Commands/RegisterStudent/RegisterStudentCommand';
 import { UsersFacade } from '../../../Modules/Authentication/Services/UsersFacade';
 import { Users } from '../../../Modules/Authentication/Contracts/Users';
 import { IUserRepository } from '../../../Modules/Authentication/Repositories/UserRepository/IUserRepository';
@@ -14,8 +14,8 @@ export class CompositionRoot {
         return new InMemoryCurrentUserRepository();
     }
 
-    makeCreateStudentCommand() {
-        return new CreateStudentCommand(this.makeUserService());
+    public makeRegisterStudentCommand() {
+        return new RegisterStudentCommand(this.makeUserService());
     }
 
     private makeUserService(): Users {

@@ -1,4 +1,4 @@
-import { CreateStudentRequest } from './Modules/Students/Commands/CreateStudent/CreateStudentRequest';
+import { RegisterStudentRequest } from './Modules/Students/Commands/RegisterStudent/RegisterStudentRequest';
 import { CompositionRoot } from './Shared/Application/CompositionRoot/CompositionRoot';
 import { InMemoryCurrentUserRepository } from './Modules/Authentication/Repositories/InMemoryCurrentUserRepository';
 
@@ -15,8 +15,8 @@ export class App {
     }
 
     public createStudent(name: string) {
-        const request: CreateStudentRequest = { name };
-        const handler = this.compositionRoot.makeCreateStudentCommand();
+        const request: RegisterStudentRequest = { name };
+        const handler = this.compositionRoot.makeRegisterStudentCommand();
 
         return handler.handle(request);
     }

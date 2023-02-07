@@ -1,12 +1,12 @@
 import { CommandHandler } from '../../../../Shared/Application/Command/CommandHandler';
-import { CreateStudentRequest } from './CreateStudentRequest';
+import { RegisterStudentRequest } from './RegisterStudentRequest';
 import { Users } from '../../../Authentication/Contracts/Users';
 
-export class CreateStudentCommand implements CommandHandler<CreateStudentRequest, boolean> {
+export class RegisterStudentCommand implements CommandHandler<RegisterStudentRequest, boolean> {
     constructor(private readonly userService: Users) {
     }
 
-    handle(request: CreateStudentRequest): boolean {
+    handle(request: RegisterStudentRequest): boolean {
         const validNameRegex = /^[a-zA-Z]+$/;
         if (!validNameRegex.test(request.name)) {
             return false;
