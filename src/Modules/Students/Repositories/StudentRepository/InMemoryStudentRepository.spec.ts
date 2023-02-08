@@ -2,6 +2,7 @@ import { describe } from 'mocha';
 import { InMemoryStudentRepository } from './InMemoryStudentRepository';
 import { expect } from 'chai';
 import { Student } from '../../Models/Student';
+import { StudentEmail } from '../../Models/StudentEmail';
 
 describe('InMemoryUserRepository', function () {
     let repo: InMemoryStudentRepository;
@@ -12,7 +13,7 @@ describe('InMemoryUserRepository', function () {
 
     describe('contains', function () {
         it('returns true if Daniel exists', () => {
-            const student = new Student('Daniel', '');
+            const student = new Student('Daniel', new StudentEmail(''));
 
             repo.addStudent(student);
 
@@ -22,7 +23,7 @@ describe('InMemoryUserRepository', function () {
 
     describe('addStudent', function () {
         it('should accept "Lars"', function () {
-            let student = new Student('Lars', 'asdf@asdf.com');
+            let student = new Student('Lars', new StudentEmail(''));
 
             repo.addStudent(student);
 
@@ -31,7 +32,7 @@ describe('InMemoryUserRepository', function () {
         });
 
         it('should not add "Frank" if they already exist', function () {
-            let student = new Student('Frank', '');
+            let student = new Student('Frank', new StudentEmail(''));
 
             repo = new InMemoryStudentRepository([student]);
             repo.addStudent(student);

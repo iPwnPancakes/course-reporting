@@ -6,6 +6,11 @@ export class StudentEmail {
     }
 
     public static make(email: string): Result<StudentEmail, ValidationError> {
+        const validEmailRegex = /^\S+@\S+$/;
+        if (!validEmailRegex.test(email)) {
+            return { ok: false, error: new ValidationError('Email requires an "@" character') };
+        }
+
         return { ok: true, value: new StudentEmail(email) };
     }
 
