@@ -1,9 +1,9 @@
 import { Given, Then, When } from '@cucumber/cucumber';
 import { RegisterStudentCommand } from './RegisterStudentCommand';
 import { expect } from 'chai';
-import { InMemoryStudentNameRepository } from '../../Repositories/StudentRepository/InMemoryStudentNameRepository';
+import { InMemoryStudentRepository } from '../../Repositories/StudentRepository/InMemoryStudentRepository';
 
-const userRepo = new InMemoryStudentNameRepository();
+const userRepo = new InMemoryStudentRepository();
 const useCase = new RegisterStudentCommand(userRepo);
 
 let response: boolean = false;

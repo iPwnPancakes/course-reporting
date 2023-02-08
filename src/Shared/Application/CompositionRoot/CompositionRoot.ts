@@ -2,25 +2,25 @@ import {
     InMemoryCurrentUserRepository
 } from '../../../Modules/Authentication/Repositories/InMemoryCurrentUserRepository';
 import { RegisterStudentCommand } from '../../../Modules/Students/Commands/RegisterStudent/RegisterStudentCommand';
-import { IStudentNameRepository } from '../../../Modules/Students/Repositories/StudentRepository/IStudentNameRepository';
+import { IStudentRepository } from '../../../Modules/Students/Repositories/StudentRepository/IStudentRepository';
 import {
-    InMemoryStudentNameRepository
-} from '../../../Modules/Students/Repositories/StudentRepository/InMemoryStudentNameRepository';
+    InMemoryStudentRepository
+} from '../../../Modules/Students/Repositories/StudentRepository/InMemoryStudentRepository';
 
 export class CompositionRoot {
-    private userRepo: IStudentNameRepository | null = null;
+    private userRepo: IStudentRepository | null = null;
 
     public makeCurrentUserRepository(): InMemoryCurrentUserRepository {
         return new InMemoryCurrentUserRepository();
     }
 
     public makeRegisterStudentCommand() {
-        return new RegisterStudentCommand(this.makeUserRepository());
+        return new RegisterStudentCommand(this.makeStudentRepository());
     }
 
-    public makeUserRepository(): IStudentNameRepository {
+    public makeStudentRepository(): IStudentRepository {
         if (!this.userRepo) {
-            this.userRepo = new InMemoryStudentNameRepository();
+            this.userRepo = new InMemoryStudentRepository();
         }
 
         return this.userRepo;

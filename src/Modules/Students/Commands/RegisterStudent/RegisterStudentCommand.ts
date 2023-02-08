@@ -1,10 +1,10 @@
 import { CommandHandler } from '../../../../Shared/Application/Command/CommandHandler';
 import { RegisterStudentRequest } from './RegisterStudentRequest';
-import { IStudentNameRepository } from '../../Repositories/StudentRepository/IStudentNameRepository';
 import { Student } from '../../Models/Student';
+import { IStudentRepository } from '../../Repositories/StudentRepository/IStudentRepository';
 
 export class RegisterStudentCommand implements CommandHandler<RegisterStudentRequest, boolean> {
-    constructor(private readonly studentRepo: IStudentNameRepository) {
+    constructor(private readonly studentRepo: IStudentRepository) {
     }
 
     handle(request: RegisterStudentRequest): boolean {
@@ -13,7 +13,7 @@ export class RegisterStudentCommand implements CommandHandler<RegisterStudentReq
             return false;
         }
 
-        this.studentRepo.addStudent(studentOrError.value.getName());
+        this.studentRepo.addStudent(studentOrError.value);
         return true;
     }
 }

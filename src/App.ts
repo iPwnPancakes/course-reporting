@@ -1,16 +1,17 @@
 import { RegisterStudentRequest } from './Modules/Students/Commands/RegisterStudent/RegisterStudentRequest';
 import { CompositionRoot } from './Shared/Application/CompositionRoot/CompositionRoot';
 import { InMemoryCurrentUserRepository } from './Modules/Authentication/Repositories/InMemoryCurrentUserRepository';
-import { IStudentNameRepository } from './Modules/Students/Repositories/StudentRepository/IStudentNameRepository';
+import { IStudentRepository } from './Modules/Students/Repositories/StudentRepository/IStudentRepository';
+import { Student } from './Modules/Students/Models/Student';
 
 export class App {
 
     private readonly currentUserRepo: InMemoryCurrentUserRepository;
-    private readonly userRepo: IStudentNameRepository;
+    private readonly userRepo: IStudentRepository;
 
     constructor(private readonly compositionRoot: CompositionRoot) {
         this.currentUserRepo = compositionRoot.makeCurrentUserRepository();
-        this.userRepo = compositionRoot.makeUserRepository();
+        this.userRepo = compositionRoot.makeStudentRepository();
     }
 
     public start() {
@@ -29,7 +30,7 @@ export class App {
     }
 
     listAllStudents(): string[] {
-        return this.userRepo.getAllStudents();
+        return this.userRepo.getAllStudents().map((s: Student) => s.getName());
     }
 
     logout() {

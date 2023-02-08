@@ -4,15 +4,15 @@ import { expect } from 'chai';
 describe('Student', function () {
     describe('make', function () {
         it('Given the name "Daniel" should make a new Student with name "Daniel"', () => {
-            const student = Student.make('Daniel', '');
+            const studentOrError = Student.make('Daniel', 'asdf@asdf.com') as { ok: true, value: Student };
 
-            expect(student.getName()).to.equal('Daniel');
+            expect(studentOrError.value.getName()).to.equal('Daniel');
         });
 
         it('Given the email "asdf@asdf.com" should make a new Student with email "asdf@asdf.com"', () => {
-            const student = Student.make('Daniel', 'asdf@asdf.com');
+            const studentOrError = Student.make('Daniel', 'asdf@asdf.com') as { ok: true, value: Student };
 
-            expect(student.getEmail()).to.equal('asdf@asdf.com');
+            expect(studentOrError.value.getEmail()).to.equal('asdf@asdf.com');
         });
     });
 });
