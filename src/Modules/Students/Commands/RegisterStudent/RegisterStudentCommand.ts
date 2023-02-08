@@ -8,19 +8,12 @@ export class RegisterStudentCommand implements CommandHandler<RegisterStudentReq
     }
 
     handle(request: RegisterStudentRequest): boolean {
-        const validNameRegex = /^[a-zA-Z]+$/;
-        if (!validNameRegex.test(request.name)) {
+        const studentOrError = Student.make(request.name, request.email);
+        if (!studentOrError.ok) {
             return false;
         }
 
-        const validEmailRegex = /^\S+@\S+$/;
-        if (!validEmailRegex.test(request.email)) {
-            return false;
-        }
-
-        const student = Student.make(request.name, request.email);
-
-        this.studentRepo.addStudent(student.getName());
+        this.studentRepo.addStudent(studentOrError.value.getName());
         return true;
     }
 }
