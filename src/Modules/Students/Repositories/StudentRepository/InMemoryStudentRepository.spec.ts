@@ -2,7 +2,6 @@ import { describe } from 'mocha';
 import { InMemoryStudentRepository } from './InMemoryStudentRepository';
 import { expect } from 'chai';
 import { Student } from '../../Models/Student';
-import { StudentEmail } from '../../Models/StudentEmail';
 
 describe('InMemoryUserRepository', function () {
     let repo: InMemoryStudentRepository;
@@ -13,7 +12,7 @@ describe('InMemoryUserRepository', function () {
 
     describe('contains', function () {
         it('returns true if Daniel exists', () => {
-            const student = new Student('Daniel', makeEmailFromString('asdf@asdf.com'));
+            const student = makeStudentFrom('Daniel', 'asdf@asdf.com');
 
             repo.addStudent(student);
 
@@ -23,7 +22,7 @@ describe('InMemoryUserRepository', function () {
 
     describe('addStudent', function () {
         it('should accept "Lars"', function () {
-            let student = new Student('Lars', makeEmailFromString('asdf@asdf.com'));
+            let student = makeStudentFrom('Lars', 'asdf@asdf.com');
 
             repo.addStudent(student);
 
@@ -32,7 +31,7 @@ describe('InMemoryUserRepository', function () {
         });
 
         it('should not add "Frank" if they already exist', function () {
-            let student = new Student('Frank', makeEmailFromString('asdf@asdf.com'));
+            let student = makeStudentFrom('Frank', 'asdf@asdf.com');
 
             repo = new InMemoryStudentRepository([student]);
             repo.addStudent(student);
@@ -42,12 +41,12 @@ describe('InMemoryUserRepository', function () {
     });
 });
 
-function makeEmailFromString(email: string): StudentEmail {
-    const studentEmailOrError = StudentEmail.make(email);
+function makeStudentFrom(name: string, email: string): Student {
+    const studentOrError = Student.make(name, email);
 
-    if (studentEmailOrError.ok === false) {
-        throw studentEmailOrError.error;
+    if (studentOrError.ok === false) {
+        throw studentOrError.error;
     }
 
-    return studentEmailOrError.value;
+    return studentOrError.value;
 }

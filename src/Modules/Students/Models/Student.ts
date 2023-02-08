@@ -3,7 +3,7 @@ import { ValidationError } from '../../../Shared/Application/Errors/ValidationEr
 import { StudentEmail } from './StudentEmail';
 
 export class Student {
-    constructor(private readonly name: string, private email: StudentEmail) {
+    private constructor(private readonly name: string, private email: StudentEmail) {
     }
 
     static make(name: string, email: string): Result<Student, ValidationError> {
