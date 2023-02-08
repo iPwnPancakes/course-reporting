@@ -2,13 +2,13 @@ import {
     InMemoryCurrentUserRepository
 } from '../../../Modules/Authentication/Repositories/InMemoryCurrentUserRepository';
 import { RegisterStudentCommand } from '../../../Modules/Students/Commands/RegisterStudent/RegisterStudentCommand';
-import { IStudentRepository } from '../../../Modules/Students/Repositories/StudentRepository/IStudentRepository';
+import { IStudentNameRepository } from '../../../Modules/Students/Repositories/StudentRepository/IStudentNameRepository';
 import {
     InMemoryStudentRepository
 } from '../../../Modules/Students/Repositories/StudentRepository/InMemoryStudentRepository';
 
 export class CompositionRoot {
-    private userRepo: IStudentRepository | null = null;
+    private userRepo: IStudentNameRepository | null = null;
 
     public makeCurrentUserRepository(): InMemoryCurrentUserRepository {
         return new InMemoryCurrentUserRepository();
@@ -18,7 +18,7 @@ export class CompositionRoot {
         return new RegisterStudentCommand(this.makeUserRepository());
     }
 
-    public makeUserRepository(): IStudentRepository {
+    public makeUserRepository(): IStudentNameRepository {
         if (!this.userRepo) {
             this.userRepo = new InMemoryStudentRepository();
         }

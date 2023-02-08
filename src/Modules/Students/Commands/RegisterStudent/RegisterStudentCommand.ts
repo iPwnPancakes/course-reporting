@@ -1,9 +1,9 @@
 import { CommandHandler } from '../../../../Shared/Application/Command/CommandHandler';
 import { RegisterStudentRequest } from './RegisterStudentRequest';
-import { IStudentRepository } from '../../Repositories/StudentRepository/IStudentRepository';
+import { IStudentNameRepository } from '../../Repositories/StudentRepository/IStudentNameRepository';
 
 export class RegisterStudentCommand implements CommandHandler<RegisterStudentRequest, boolean> {
-    constructor(private readonly studentRepo: IStudentRepository) {
+    constructor(private readonly studentRepo: IStudentNameRepository) {
     }
 
     handle(request: RegisterStudentRequest): boolean {

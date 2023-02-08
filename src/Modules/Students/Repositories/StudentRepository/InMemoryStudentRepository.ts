@@ -1,6 +1,6 @@
-import { IStudentRepository } from './IStudentRepository';
+import { IStudentNameRepository } from './IStudentNameRepository';
 
-export class InMemoryStudentRepository implements IStudentRepository {
+export class InMemoryStudentRepository implements IStudentNameRepository {
     constructor(private arr: string[] = []) {
     }
 
