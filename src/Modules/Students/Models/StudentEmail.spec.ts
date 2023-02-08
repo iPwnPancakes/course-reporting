@@ -9,5 +9,11 @@ describe('StudentEmail', function () {
             expect(emailOrError.ok).to.equal(true);
             expect(emailOrError.value.toString()).to.equal('asdf@asdf.com');
         });
+
+        it('should not accept emails missing the "@" character"', () => {
+            const emailOrError = StudentEmail.make('asdf');
+
+            expect(emailOrError.ok).to.equal(false);
+        });
     });
 });
