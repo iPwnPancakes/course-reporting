@@ -4,8 +4,8 @@ import {
 import { RegisterStudentCommand } from '../../../Modules/Students/Commands/RegisterStudent/RegisterStudentCommand';
 import { IStudentNameRepository } from '../../../Modules/Students/Repositories/StudentRepository/IStudentNameRepository';
 import {
-    InMemoryStudentRepository
-} from '../../../Modules/Students/Repositories/StudentRepository/InMemoryStudentRepository';
+    InMemoryStudentNameRepository
+} from '../../../Modules/Students/Repositories/StudentRepository/InMemoryStudentNameRepository';
 
 export class CompositionRoot {
     private userRepo: IStudentNameRepository | null = null;
@@ -20,7 +20,7 @@ export class CompositionRoot {
 
     public makeUserRepository(): IStudentNameRepository {
         if (!this.userRepo) {
-            this.userRepo = new InMemoryStudentRepository();
+            this.userRepo = new InMemoryStudentNameRepository();
         }
 
         return this.userRepo;

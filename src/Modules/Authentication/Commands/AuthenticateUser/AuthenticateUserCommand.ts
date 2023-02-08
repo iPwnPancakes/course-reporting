@@ -1,9 +1,9 @@
 import { CommandHandler } from '../../../../Shared/Application/Command/CommandHandler';
 import { AuthenticateUserRequest } from './AuthenticateUserRequest';
-import { InMemoryStudentRepository } from '../../../Students/Repositories/StudentRepository/InMemoryStudentRepository';
+import { InMemoryStudentNameRepository } from '../../../Students/Repositories/StudentRepository/InMemoryStudentNameRepository';
 
 export class AuthenticateUserCommand implements CommandHandler<AuthenticateUserRequest, string> {
-    constructor(private readonly userRepo: InMemoryStudentRepository) {
+    constructor(private readonly userRepo: InMemoryStudentNameRepository) {
     }
 
     handle(request: AuthenticateUserRequest): string {

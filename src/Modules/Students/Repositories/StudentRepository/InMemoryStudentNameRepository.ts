@@ -1,6 +1,6 @@
 import { IStudentNameRepository } from './IStudentNameRepository';
 
-export class InMemoryStudentRepository implements IStudentNameRepository {
+export class InMemoryStudentNameRepository implements IStudentNameRepository {
     constructor(private arr: string[] = []) {
     }
 

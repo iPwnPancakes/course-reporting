@@ -1,17 +1,17 @@
 import { describe } from 'mocha';
-import { InMemoryStudentRepository } from './InMemoryStudentRepository';
+import { InMemoryStudentNameRepository } from './InMemoryStudentNameRepository';
 import { expect } from 'chai';
 
 describe('InMemoryUserRepository', function () {
-    let repo: InMemoryStudentRepository;
+    let repo: InMemoryStudentNameRepository;
 
     beforeEach(() => {
-        repo = new InMemoryStudentRepository([]);
+        repo = new InMemoryStudentNameRepository([]);
     });
 
     describe('getting a student', function () {
         it('should return "Daniel" if they exist', function () {
-            repo = new InMemoryStudentRepository(['Daniel']);
+            repo = new InMemoryStudentNameRepository(['Daniel']);
 
             const student = repo.getIfExists('Daniel');
 
@@ -29,7 +29,7 @@ describe('InMemoryUserRepository', function () {
 
     describe('adding duplicate students', function () {
         it('should not add "Frank" if they already exist', function () {
-            repo = new InMemoryStudentRepository(['Frank']);
+            repo = new InMemoryStudentNameRepository(['Frank']);
 
             expect(repo.getNumberOfStudents()).to.equal(1);
         });
@@ -37,7 +37,7 @@ describe('InMemoryUserRepository', function () {
 
     describe('getting all students', function () {
         it('should return all initial students', () => {
-            repo = new InMemoryStudentRepository();
+            repo = new InMemoryStudentNameRepository();
             repo.addStudent('Abigail');
             repo.addStudent('Lars');
 
@@ -46,7 +46,7 @@ describe('InMemoryUserRepository', function () {
         })
 
         it('should return all students added', () => {
-            repo = new InMemoryStudentRepository();
+            repo = new InMemoryStudentNameRepository();
             repo.addStudent('Daniel');
             repo.addStudent('Miguel');
 
