@@ -9,4 +9,8 @@ export class Student {
     getEmail(): string {
         return this.email;
     }
+
+    equals(student: Student) {
+        return student.getName() === this.name && student.getEmail() === this.email;
+    }
 }
