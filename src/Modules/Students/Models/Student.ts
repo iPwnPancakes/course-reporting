@@ -4,7 +4,7 @@ import { StudentEmail } from './StudentEmail';
 import { Name } from './Name';
 
 export class Student {
-    private constructor(private readonly name: string, private email: StudentEmail) {
+    private constructor(private readonly name: Name, private email: StudentEmail) {
     }
 
     static make(name: string, email: string): Result<Student, ValidationError> {
@@ -18,11 +18,11 @@ export class Student {
             return studentEmailOrError;
         }
 
-        return { ok: true, value: new Student(name, studentEmailOrError.value) };
+        return { ok: true, value: new Student(nameOrError.value, studentEmailOrError.value) };
     }
 
     getName(): string {
-        return this.name;
+        return this.name.toString();
     }
 
     getEmail(): string {

@@ -2,6 +2,8 @@ import { Result } from '../../../Shared/Application/Result/Result';
 import { ValidationError } from '../../../Shared/Application/Errors/ValidationError';
 
 export class Name {
+    public function;
+
     private constructor(private readonly name: string) {
     }
 
@@ -12,5 +14,9 @@ export class Name {
         }
 
         return { ok: true, value: new Name(name) };
+    }
+
+    public toString(): string {
+        return this.name;
     }
 }
