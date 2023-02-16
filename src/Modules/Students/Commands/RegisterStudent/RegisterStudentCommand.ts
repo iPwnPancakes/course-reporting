@@ -4,9 +4,10 @@ import { Student } from '../../Models/Student';
 import { IStudentRepository } from '../../Repositories/StudentRepository/IStudentRepository';
 import { Result } from "../../../../Shared/Application/Result/Result";
 import { InvalidOperationError } from "./RegisterStudentErrors";
+import { IEmailService } from "../../../Email/Contracts/IEmailService";
 
 export class RegisterStudentCommand implements CommandHandler<RegisterStudentRequest, Result<Student, Error>> {
-    constructor(private readonly studentRepo: IStudentRepository) {
+    constructor(private readonly studentRepo: IStudentRepository, private readonly emailService: IEmailService) {
     }
 
     handle(request: RegisterStudentRequest): Result<Student, Error> {
@@ -19,6 +20,10 @@ export class RegisterStudentCommand implements CommandHandler<RegisterStudentReq
             return { ok: false, error: new InvalidOperationError() };
         }
 
-        return { ok: true, value: this.studentRepo.addStudent(studentOrError.value) };
+        const registeredStudent = this.studentRepo.addStudent(studentOrError.value);
+
+        this.emailService.sendNewStudentRegistrationEmail(registeredStudent.getName(), [registeredStudent.getEmail()]);
+
+        return { ok: true, value: registeredStudent };
     }
 }

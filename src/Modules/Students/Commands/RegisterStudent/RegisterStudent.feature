@@ -43,5 +43,5 @@ Feature: Register Student
 
   Scenario: Send email when student is registered
     Given the RegisterStudent handler
-    When I register a Student named "Daniel" with email "farquaad@shrek.com"
+    When I register a Student named Daniel with email farquaad@shrek.com
     Then an email should be sent

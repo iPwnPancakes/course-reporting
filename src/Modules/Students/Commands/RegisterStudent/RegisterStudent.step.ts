@@ -4,7 +4,6 @@ import { expect } from 'chai';
 import { InMemoryStudentRepository } from '../../Repositories/StudentRepository/InMemoryStudentRepository';
 import { Student } from "../../Models/Student";
 import { Result } from "../../../../Shared/Application/Result/Result";
-import { IEmailService } from "../../../Email/Contracts/IEmailService";
 import { EmailServiceSpy } from "../../../../../tests/UseCase/Fixtures/EmailServiceSpy";
 
 let mockEmailService: EmailServiceSpy;
@@ -14,7 +13,7 @@ let response: Result<Student, Error>;
 Given('the RegisterStudent handler', function () {
     const userRepo = new InMemoryStudentRepository();
     mockEmailService = new EmailServiceSpy();
-    useCase = new RegisterStudentCommand(userRepo);
+    useCase = new RegisterStudentCommand(userRepo, mockEmailService);
 });
 
 When(/I register a Student named (.*) with email (.*)/, function (name: string, email: string) {
