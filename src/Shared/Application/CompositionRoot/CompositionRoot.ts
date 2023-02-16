@@ -6,6 +6,8 @@ import { IStudentRepository } from '../../../Modules/Students/Repositories/Stude
 import {
     InMemoryStudentRepository
 } from '../../../Modules/Students/Repositories/StudentRepository/InMemoryStudentRepository';
+import { IEmailService } from "../../../Modules/Email/Contracts/IEmailService";
+import { StubbedEmailService } from "../../../Modules/Email/Services/StubbedEmailService";
 
 export class CompositionRoot {
     private userRepo: IStudentRepository | null = null;
@@ -15,7 +17,7 @@ export class CompositionRoot {
     }
 
     public makeRegisterStudentCommand() {
-        return new RegisterStudentCommand(this.makeStudentRepository());
+        return new RegisterStudentCommand(this.makeStudentRepository(), this.makeEmailService());
     }
 
     public makeStudentRepository(): IStudentRepository {
@@ -24,5 +26,9 @@ export class CompositionRoot {
         }
 
         return this.userRepo;
+    }
+
+    private makeEmailService(): IEmailService {
+        return new StubbedEmailService();
     }
 }

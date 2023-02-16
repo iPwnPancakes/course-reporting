@@ -4,16 +4,17 @@ import { expect } from 'chai';
 import { InMemoryStudentRepository } from '../../Repositories/StudentRepository/InMemoryStudentRepository';
 import { Student } from "../../Models/Student";
 import { Result } from "../../../../Shared/Application/Result/Result";
-import { EmailServiceSpy } from "../../../../../tests/UseCase/Fixtures/EmailServiceSpy";
+import { IEmailService } from "../../../Email/Contracts/IEmailService";
+import { capture, instance, mock } from "ts-mockito";
 
-let mockEmailService: EmailServiceSpy;
+let mockEmailService: IEmailService;
 let useCase: RegisterStudentCommand;
 let response: Result<Student, Error>;
 
 Given('the RegisterStudent handler', function () {
     const userRepo = new InMemoryStudentRepository();
-    mockEmailService = new EmailServiceSpy();
-    useCase = new RegisterStudentCommand(userRepo, mockEmailService);
+    mockEmailService = mock<IEmailService>();
+    useCase = new RegisterStudentCommand(userRepo, instance(mockEmailService));
 });
 
 When(/I register a Student named (.*) with email (.*)/, function (name: string, email: string) {
@@ -42,6 +43,9 @@ Then(/I should get back an error/, function () {
 Given(/^a Student with name (.*) and email (.*) is already registered$/, function (name: string, email: string) {
     useCase.handle({ name, email });
 });
-Then(/^an email should be sent$/, function () {
-    expect(mockEmailService.newStudentRegistrationEmailCalls).to.equal(1);
+Then(/^an email should be sent to (.*) that (.*) has been registered$/, function (email: string, name: string) {
+    const [studentName, subjects] = capture(mockEmailService.sendNewStudentRegistrationEmail).last();
+
+    expect(studentName).to.equal(name);
+    expect(subjects).to.include(email);
 });
