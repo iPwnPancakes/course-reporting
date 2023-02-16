@@ -36,3 +36,6 @@ Then(/I should get back an error/, function () {
     }
 });
 
+Given(/^a Student with name (.*) and email (.*) is already registered$/, function (name: string, email: string) {
+    useCase.handle({ name, email });
+});
