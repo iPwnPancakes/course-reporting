@@ -4,12 +4,16 @@ import { expect } from 'chai';
 import { InMemoryStudentRepository } from '../../Repositories/StudentRepository/InMemoryStudentRepository';
 import { Student } from "../../Models/Student";
 import { Result } from "../../../../Shared/Application/Result/Result";
+import { IEmailService } from "../../../Email/Contracts/IEmailService";
+import { EmailServiceSpy } from "../../../../../tests/UseCase/Fixtures/EmailServiceSpy";
 
+let mockEmailService: EmailServiceSpy;
 let useCase: RegisterStudentCommand;
 let response: Result<Student, Error>;
 
 Given('the RegisterStudent handler', function () {
     const userRepo = new InMemoryStudentRepository();
+    mockEmailService = new EmailServiceSpy();
     useCase = new RegisterStudentCommand(userRepo);
 });
 
@@ -38,4 +42,7 @@ Then(/I should get back an error/, function () {
 
 Given(/^a Student with name (.*) and email (.*) is already registered$/, function (name: string, email: string) {
     useCase.handle({ name, email });
+});
+Then(/^an email should be sent$/, function () {
+    expect(mockEmailService.newStudentRegistrationEmailCalls).to.equal(1);
 });

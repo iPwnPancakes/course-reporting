@@ -40,3 +40,8 @@ Feature: Register Student
       | name   | email         |
       | Leffen | asdf@asdf.com |
       | Armada | gg@gg.com     |
+
+  Scenario: Send email when student is registered
+    Given the RegisterStudent handler
+    When I register a Student named "Daniel" with email "farquaad@shrek.com"
+    Then an email should be sent
