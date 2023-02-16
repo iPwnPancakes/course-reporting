@@ -1,5 +1,8 @@
 {
     "default": {
+        "paths": [
+            "tests/Acceptance/**/*.feature"
+        ],
         "require": [
             "tests/Acceptance/**/*.ts"
         ],

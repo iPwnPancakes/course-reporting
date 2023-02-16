@@ -7,7 +7,7 @@
         "start": "ts-node src/bootstrap.ts",
         "build": "tsc --build",
         "clean": "tsc --build --clean",
-        "test:acceptance": "cucumber-js --config=tests/Acceptance/cucumber.config.json --tags 'not @SkipWhenAcceptanceTesting' ./src",
+        "test:acceptance": "cucumber-js --config=tests/Acceptance/cucumber.config.json --tags 'not @SkipWhenAcceptanceTesting'",
         "test:use-case": "cucumber-js --config=tests/UseCase/cucumber.config.json --tags 'not @SkipWhenUseCaseTesting' ./src",
         "test:unit": "mocha -r ts-node/register src/**/*.spec.ts"
     },
