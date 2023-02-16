@@ -45,3 +45,9 @@ Feature: Register Student
     Given the RegisterStudent handler
     When I register a Student named Daniel with email farquaad@shrek.com
     Then an email should be sent to farquaad@shrek.com that Daniel has been registered
+
+  Scenario: Email service is down
+    Given the RegisterStudent handler
+    And an Email Service is not available
+    When I register a Student named Daniel with email example@example.com
+    Then I should get back an error

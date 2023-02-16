@@ -5,7 +5,7 @@ import { InMemoryStudentRepository } from '../../../Repositories/StudentReposito
 import { Student } from "../../../Models/Student";
 import { Result } from "../../../../../Shared/Application/Result/Result";
 import { IEmailService } from "../../../../Email/Contracts/IEmailService";
-import { capture, instance, mock } from "ts-mockito";
+import { capture, instance, mock, when } from "ts-mockito";
 
 let mockEmailService: IEmailService;
 let useCase: RegisterStudentCommand;
@@ -48,4 +48,7 @@ Then(/^an email should be sent to (.*) that (.*) has been registered$/, function
 
     expect(studentName).to.equal(name);
     expect(subjects).to.include(email);
+});
+Given(/^an Email Service is not available$/, function () {
+    when(mockEmailService.sendNewStudentRegistrationEmail).thenThrow(new Error('fatal error'));
 });
