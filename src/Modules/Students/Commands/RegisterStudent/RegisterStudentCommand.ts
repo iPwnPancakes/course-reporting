@@ -22,7 +22,12 @@ export class RegisterStudentCommand implements CommandHandler<RegisterStudentReq
 
         const registeredStudent = this.studentRepo.addStudent(studentOrError.value);
 
-        this.emailService.sendNewStudentRegistrationEmail(registeredStudent.getName(), [registeredStudent.getEmail()]);
+        try {
+            this.emailService.sendNewStudentRegistrationEmail(registeredStudent.getName(), [registeredStudent.getEmail()]);
+        } catch (e) {
+            return { ok: false, error: new Error('Email Service is not available') };
+        }
+
 
         return { ok: true, value: registeredStudent };
     }
