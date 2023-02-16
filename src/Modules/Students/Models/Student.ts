@@ -10,12 +10,12 @@ export class Student {
     static make(name: string, email: string): Result<Student, ValidationError> {
         const nameOrError = Name.make(name);
         if (nameOrError.ok === false) {
-            return nameOrError;
+            return { ok: false, error: nameOrError.error };
         }
 
         const studentEmailOrError = StudentEmail.make(email);
         if (studentEmailOrError.ok === false) {
-            return studentEmailOrError;
+            return { ok: false, error: studentEmailOrError.error };
         }
 
         return { ok: true, value: new Student(nameOrError.value, studentEmailOrError.value) };

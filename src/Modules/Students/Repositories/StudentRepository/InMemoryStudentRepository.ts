@@ -5,10 +5,12 @@ export class InMemoryStudentRepository implements IStudentRepository {
     constructor(private arr: Student[] = []) {
     }
 
-    addStudent(student: Student): void {
+    addStudent(student: Student): Student {
         if (!this.contains(student)) {
             this.arr.push(student);
         }
+
+        return student;
     }
 
     getAllStudents(): Student[] {
