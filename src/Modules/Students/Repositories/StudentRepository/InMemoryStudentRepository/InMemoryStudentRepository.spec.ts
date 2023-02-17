@@ -1,7 +1,7 @@
 import { describe } from 'mocha';
 import { InMemoryStudentRepository } from './InMemoryStudentRepository';
 import { expect } from 'chai';
-import { Student } from '../../Models/Student';
+import { Student } from '../../../Models/Student';
 
 describe('InMemoryUserRepository', function () {
     let repo: InMemoryStudentRepository;

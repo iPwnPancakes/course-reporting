@@ -5,7 +5,7 @@ import { RegisterStudentCommand } from '../../../Modules/Students/Commands/Regis
 import { IStudentRepository } from '../../../Modules/Students/Repositories/StudentRepository/IStudentRepository';
 import {
     InMemoryStudentRepository
-} from '../../../Modules/Students/Repositories/StudentRepository/InMemoryStudentRepository';
+} from '../../../Modules/Students/Repositories/StudentRepository/InMemoryStudentRepository/InMemoryStudentRepository';
 import { IEmailService } from "../../../Modules/Email/Contracts/IEmailService";
 import { StubbedEmailService } from "../../../Modules/Email/Services/StubbedEmailService";
 

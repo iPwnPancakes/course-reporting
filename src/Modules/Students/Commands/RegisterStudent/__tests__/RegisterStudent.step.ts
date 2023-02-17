@@ -1,7 +1,7 @@
 import { Given, Then, When } from '@cucumber/cucumber';
 import { RegisterStudentCommand } from '../RegisterStudentCommand';
 import { expect } from 'chai';
-import { InMemoryStudentRepository } from '../../../Repositories/StudentRepository/InMemoryStudentRepository';
+import { InMemoryStudentRepository } from '../../../Repositories/StudentRepository/InMemoryStudentRepository/InMemoryStudentRepository';
 import { Student } from "../../../Models/Student";
 import { Result } from "../../../../../Shared/Application/Result/Result";
 import { IEmailService } from "../../../../Email/Contracts/IEmailService";

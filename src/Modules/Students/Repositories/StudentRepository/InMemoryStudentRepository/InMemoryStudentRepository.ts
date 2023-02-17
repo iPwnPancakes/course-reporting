@@ -1,5 +1,5 @@
-import { IStudentRepository } from './IStudentRepository';
-import { Student } from '../../Models/Student';
+import { IStudentRepository } from '../IStudentRepository';
+import { Student } from '../../../Models/Student';
 
 export class InMemoryStudentRepository implements IStudentRepository {
     constructor(private arr: Student[] = []) {
