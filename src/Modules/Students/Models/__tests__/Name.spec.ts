@@ -1,4 +1,4 @@
-import { Name } from './Name';
+import { Name } from '../Name';
 import { expect } from 'chai';
 
 describe('Name', function () {

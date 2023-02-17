@@ -1,4 +1,4 @@
-import { StudentEmail } from './StudentEmail';
+import { StudentEmail } from '../StudentEmail';
 import { expect } from 'chai';
 
 describe('StudentEmail', function () {
