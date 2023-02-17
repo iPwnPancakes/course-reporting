@@ -9,7 +9,8 @@
         "clean": "tsc --build --clean",
         "test:acceptance": "cucumber-js --config=tests/Acceptance/cucumber.config.json",
         "test:use-case": "cucumber-js --config=tests/UseCase/cucumber.config.json",
-        "test:unit": "mocha -r ts-node/register src/**/*.spec.ts"
+        "test:unit": "mocha -r ts-node/register src/**/*.spec.ts",
+        "typeorm": "typeorm-ts-node-commonjs"
     },
     "author": "",
     "license": "ISC",
@@ -17,10 +18,16 @@
         "@cucumber/cucumber": "^8.10.0",
         "@types/chai": "^4.3.4",
         "@types/mocha": "^10.0.1",
+        "@types/node": "^16.11.10",
         "chai": "^4.3.7",
-        "mocha": "^8.0",
+        "mocha": "^10.2.0",
         "ts-mockito": "^2.6.1",
-        "ts-node": "^10.9.1",
-        "typescript": "^4.9.5"
+        "ts-node": "10.7.0",
+        "typescript": "4.5.2"
+    },
+    "dependencies": {
+        "mysql2": "^3.1.2",
+        "reflect-metadata": "^0.1.13",
+        "typeorm": "0.3.12"
     }
 }
