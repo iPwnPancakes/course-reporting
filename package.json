@@ -12,7 +12,8 @@
         "test:unit": "mocha -r ts-node/register src/**/*.spec.ts",
         "test:contract": "mocha -r ts-node/register -r dotenv/config src/**/*.contract.ts",
         "typeorm": "typeorm-ts-node-commonjs",
-        "typeorm:migrate": "typeorm-ts-node-commonjs migration:run -d src/Infrastructure/TypeOrm/MigrationDataSource.ts"
+        "typeorm:migrate": "typeorm-ts-node-commonjs migration:run -d src/Infrastructure/TypeOrm/MigrationDataSource.ts",
+        "typeorm:rollback": "typeorm-ts-node-commonjs migration:revert -d src/Infrastructure/TypeOrm/MigrationDataSource.ts"
     },
     "author": "",
     "license": "ISC",
