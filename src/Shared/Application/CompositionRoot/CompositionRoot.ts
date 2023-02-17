@@ -6,8 +6,8 @@ import { IStudentRepository } from '../../../Modules/Students/Repositories/Stude
 import {
     InMemoryStudentRepository
 } from '../../../Modules/Students/Repositories/StudentRepository/InMemoryStudentRepository/InMemoryStudentRepository';
-import { IEmailService } from "../../../Modules/Email/Contracts/IEmailService";
-import { StubbedEmailService } from "../../../Modules/Email/Services/StubbedEmailService";
+import { IEmailService } from '../../../Modules/Email/Contracts/IEmailService';
+import { StubbedEmailService } from '../../../Modules/Email/Services/StubbedEmailService';
 
 export class CompositionRoot {
     private userRepo: IStudentRepository | null = null;

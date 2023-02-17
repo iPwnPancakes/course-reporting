@@ -11,32 +11,35 @@ describe('InMemoryUserRepository', function () {
     });
 
     describe('contains', function () {
-        it('returns true if Daniel exists', () => {
+        it('returns true if Daniel exists', async () => {
             const student = makeStudentFrom('Daniel', 'asdf@asdf.com');
 
-            repo.addStudent(student);
+            await repo.addStudent(student);
 
-            expect(repo.contains(student)).to.equal(true);
+            let hasStudent = await repo.contains(student);
+            expect(hasStudent).to.equal(true);
         });
     });
 
     describe('addStudent', function () {
-        it('should accept "Lars"', function () {
+        it('should accept "Lars"', async () => {
             let student = makeStudentFrom('Lars', 'asdf@asdf.com');
 
-            repo.addStudent(student);
+            await repo.addStudent(student);
 
-            const names = repo.getAllStudents().map((s: Student) => s.getName());
+            const allStudents = await repo.getAllStudents();
+            const names = allStudents.map((s: Student) => s.getName());
             expect(names).to.contain('Lars');
         });
 
-        it('should not add "Frank" if they already exist', function () {
+        it('should not add "Frank" if they already exist', async () => {
             let student = makeStudentFrom('Frank', 'asdf@asdf.com');
 
             repo = new InMemoryStudentRepository([student]);
-            repo.addStudent(student);
+            await repo.addStudent(student);
 
-            expect(repo.getAllStudents().length).to.equal(1);
+            const allStudents = await repo.getAllStudents();
+            expect(allStudents.length).to.equal(1);
         });
     });
 });

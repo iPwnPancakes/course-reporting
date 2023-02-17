@@ -5,19 +5,19 @@ export class InMemoryStudentRepository implements IStudentRepository {
     constructor(private arr: Student[] = []) {
     }
 
-    addStudent(student: Student): Student {
-        if (!this.contains(student)) {
+    async addStudent(student: Student): Promise<Student> {
+        if (!await this.contains(student)) {
             this.arr.push(student);
         }
 
         return student;
     }
 
-    getAllStudents(): Student[] {
+    async getAllStudents(): Promise<Student[]> {
         return this.arr;
     }
 
-    contains(student: Student): boolean {
+    async contains(student: Student): Promise<boolean> {
         for (let i = 0; i < this.arr.length; i++) {
             if (student.equals(this.arr[i])) {
                 return true;

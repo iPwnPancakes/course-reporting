@@ -1,9 +1,9 @@
 import { Student } from '../../Models/Student';
 
 export interface IStudentRepository {
-    addStudent(student: Student): Student;
+    addStudent(student: Student): Promise<Student>;
 
-    getAllStudents(): Student[];
+    getAllStudents(): Promise<Student[]>;
 
-    contains(student: Student): boolean;
+    contains(student: Student): Promise<boolean>;
 }

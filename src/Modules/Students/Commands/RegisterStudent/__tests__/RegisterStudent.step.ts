@@ -17,8 +17,8 @@ Given('the RegisterStudent handler', function () {
     useCase = new RegisterStudentCommand(userRepo, instance(mockEmailService));
 });
 
-When(/I register a Student named (.*) with email (.*)/, function (name: string, email: string) {
-    response = useCase.handle({ name, email });
+When(/I register a Student named (.*) with email (.*)/, async function (name: string, email: string) {
+    response = await useCase.handle({ name, email });
 });
 
 Then(/I should get back a Student named (.*) with email (.*)/, function (name: string, email: string) {

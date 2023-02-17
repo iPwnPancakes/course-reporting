@@ -12,16 +12,16 @@ When(/I go to register a new Student named (.*) with email (.*)/, function (name
     app.createStudent(name, email);
 });
 
-Then(/I should see (.*) in the Student List/, function (name: string) {
+Then(/I should see (.*) in the Student List/, async function (name: string) {
     const app: App = this.app;
-    const studentList = app.listAllStudents();
+    const studentList = await app.listAllStudents();
 
     expect(studentList).to.contain(name);
 });
 
-Then(/I should NOT see (.*) in the Student List/, function (name: string) {
+Then(/I should NOT see (.*) in the Student List/, async function (name: string) {
     const app: App = this.app;
-    const studentList = app.listAllStudents();
+    const studentList = await app.listAllStudents();
 
     expect(studentList).to.not.contain(name);
 });

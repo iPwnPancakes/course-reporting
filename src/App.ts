@@ -29,8 +29,9 @@ export class App {
         this.currentUserRepo.setCurrentUser(username);
     }
 
-    listAllStudents(): string[] {
-        return this.userRepo.getAllStudents().map((s: Student) => s.getName());
+    async listAllStudents(): Promise<string[]> {
+        let allStudents = await this.userRepo.getAllStudents();
+        return allStudents.map((s: Student) => s.getName());
     }
 
     logout() {
