@@ -1,6 +1,7 @@
 import { After, Before } from '@cucumber/cucumber';
 import { App } from '../../../src/App';
 import { CompositionRoot } from '../../../src/Shared/Application/CompositionRoot/CompositionRoot';
+import { RandomValueMap } from '../TestInfrastructure/RandomValueMap';
 
 Before(async function () {
     const compositionRoot = new CompositionRoot();
@@ -10,6 +11,7 @@ Before(async function () {
 
     this.compositionRoot = compositionRoot;
     this.app = app;
+    this.map = new RandomValueMap();
 });
 
 After(async function () {
