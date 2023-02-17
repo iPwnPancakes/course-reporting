@@ -4,4 +4,6 @@ import { CompositionRoot } from './Shared/Application/CompositionRoot/Compositio
 const compositionRoot = new CompositionRoot();
 const app = new App(compositionRoot);
 
-app.start();
+app.start().then(() => {
+    console.log('hello world');
+});
