@@ -4,7 +4,7 @@
     "description": "",
     "main": "src/bootstrap.ts",
     "scripts": {
-        "start": "ts-node src/bootstrap.ts -r dotenv/config -r reflect-metadata",
+        "start": "ts-node -r dotenv/config -r reflect-metadata src/bootstrap.ts",
         "build": "tsc --build",
         "clean": "tsc --build --clean",
         "test:acceptance": "cucumber-js --config=tests/Acceptance/cucumber.config.json",
@@ -12,7 +12,7 @@
         "test:unit": "mocha -r ts-node/register src/**/*.spec.ts",
         "test:contract": "mocha -r ts-node/register -r dotenv/config src/**/*.contract.ts",
         "typeorm": "typeorm-ts-node-commonjs",
-        "typeorm:migrate": "typeorm-ts-node-commonjs migration:run -d src/Infrastructure/TypeOrm/AppDataSource.ts"
+        "typeorm:migrate": "typeorm-ts-node-commonjs migration:run -d src/Infrastructure/TypeOrm/MigrationDataSource.ts"
     },
     "author": "",
     "license": "ISC",

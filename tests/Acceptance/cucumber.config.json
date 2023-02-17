@@ -7,7 +7,9 @@
             "tests/Acceptance/**/*.ts"
         ],
         "requireModule": [
-            "ts-node/register"
+            "ts-node/register",
+            "dotenv/config",
+            "reflect-metadata"
         ]
     }
 }

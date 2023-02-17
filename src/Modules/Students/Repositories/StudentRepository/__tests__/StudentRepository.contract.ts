@@ -1,18 +1,26 @@
 import { InMemoryStudentRepository } from '../InMemoryStudentRepository/InMemoryStudentRepository';
 import { TypeOrmStudentRepository } from '../TypeOrmStudentRepository/TypeOrmStudentRepository';
-import { AppDataSource } from '../../../../../Infrastructure/TypeOrm/AppDataSource';
 import { Student } from '../../../Models/Student';
 import { expect } from 'chai';
 import { before } from 'mocha';
 import { IStudentRepository } from '../IStudentRepository';
 import { faker } from '@faker-js/faker';
+import { CompositionRoot } from '../../../../../Shared/Application/CompositionRoot/CompositionRoot';
+import { DataSource } from 'typeorm';
 
 describe('StudentRepository contract tests', function () {
     let userRepositories: IStudentRepository[];
+    let dbConnection: DataSource;
 
     before(async () => {
-        let dbConnection = await AppDataSource.initialize();
+        let compositionRoot = new CompositionRoot();
+        dbConnection = await compositionRoot.getTypeOrmDataSource().initialize();
+
         userRepositories = [new InMemoryStudentRepository(), new TypeOrmStudentRepository(dbConnection)];
+    });
+
+    after(async function () {
+        dbConnection.destroy();
     });
 
     describe('addStudent', function () {

@@ -1,8 +1,13 @@
-import { Before } from '@cucumber/cucumber';
+import { After, Before } from '@cucumber/cucumber';
 import { App } from '../../../src/App';
 import { CompositionRoot } from '../../../src/Shared/Application/CompositionRoot/CompositionRoot';
 
-Before(function () {
+Before(async function () {
     const compositionRoot = new CompositionRoot();
-    this.app = new App(compositionRoot);
+    const app = new App(compositionRoot);
+
+    await app.start();
+
+    this.compositionRoot = compositionRoot;
+    this.app = app;
 });
