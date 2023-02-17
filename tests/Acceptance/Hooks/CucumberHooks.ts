@@ -11,3 +11,10 @@ Before(async function () {
     this.compositionRoot = compositionRoot;
     this.app = app;
 });
+
+After(async function () {
+    const compositionRoot: CompositionRoot = this.compositionRoot;
+    if (compositionRoot.getTypeOrmDataSource().isInitialized) {
+        await compositionRoot.getTypeOrmDataSource().destroy();
+    }
+});
