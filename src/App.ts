@@ -21,7 +21,7 @@ export class App {
         await this.dbConnection.initialize();
     }
 
-    public createStudent(name: string, email: string) {
+    public async createStudent(name: string, email: string) {
         const request: RegisterStudentRequest = { name, email };
         const handler = this.compositionRoot.makeRegisterStudentCommand();
 

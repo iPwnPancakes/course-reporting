@@ -3,14 +3,14 @@ import {
 } from '../../../Modules/Authentication/Repositories/InMemoryCurrentUserRepository';
 import { RegisterStudentCommand } from '../../../Modules/Students/Commands/RegisterStudent/RegisterStudentCommand';
 import { IStudentRepository } from '../../../Modules/Students/Repositories/StudentRepository/IStudentRepository';
-import {
-    InMemoryStudentRepository
-} from '../../../Modules/Students/Repositories/StudentRepository/InMemoryStudentRepository/InMemoryStudentRepository';
 import { IEmailService } from '../../../Modules/Email/Contracts/IEmailService';
 import { StubbedEmailService } from '../../../Modules/Email/Services/StubbedEmailService';
 import { DataSource } from 'typeorm';
 import { makeDataSource } from '../../../Infrastructure/TypeOrm/AppDataSource';
 import { AppConfiguration } from '../Configuration/AppConfiguration';
+import {
+    TypeOrmStudentRepository
+} from '../../../Modules/Students/Repositories/StudentRepository/TypeOrmStudentRepository/TypeOrmStudentRepository';
 
 export class CompositionRoot {
     private userRepo: IStudentRepository | null = null;
@@ -26,7 +26,7 @@ export class CompositionRoot {
 
     public makeStudentRepository(): IStudentRepository {
         if (!this.userRepo) {
-            this.userRepo = new InMemoryStudentRepository();
+            this.userRepo = new TypeOrmStudentRepository(this.getTypeOrmDataSource());
         }
 
         return this.userRepo;

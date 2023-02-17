@@ -7,9 +7,9 @@ Given('I am a Teacher', function () {
     app.login('');
 });
 
-When(/I go to register a new Student named (.*) with email (.*)/, function (name: string, email: string) {
+When(/I go to register a new Student named (.*) with email (.*)/, async function (name: string, email: string) {
     const app: App = this.app;
-    app.createStudent(name, email);
+    await app.createStudent(name, email);
 });
 
 Then(/I should see (.*) in the Student List/, async function (name: string) {
