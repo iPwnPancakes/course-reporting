@@ -11,6 +11,9 @@ import { AppConfiguration } from '../Configuration/AppConfiguration';
 import {
     TypeOrmStudentRepository
 } from '../../../Modules/Students/Repositories/StudentRepository/TypeOrmStudentRepository/TypeOrmStudentRepository';
+import {
+    InMemoryStudentRepository
+} from '../../../Modules/Students/Repositories/StudentRepository/InMemoryStudentRepository/InMemoryStudentRepository';
 
 export class CompositionRoot {
     private userRepo: IStudentRepository | null = null;
@@ -29,7 +32,9 @@ export class CompositionRoot {
 
     public makeStudentRepository(): IStudentRepository {
         if (!this.userRepo) {
-            this.userRepo = new TypeOrmStudentRepository(this.getTypeOrmDataSource());
+            this.userRepo = this.config.isProduction() ?
+                new TypeOrmStudentRepository(this.getTypeOrmDataSource()) :
+                new InMemoryStudentRepository();
         }
 
         return this.userRepo;
