@@ -5,9 +5,9 @@ import { expect } from 'chai';
 import { before } from 'mocha';
 import { IStudentRepository } from '../IStudentRepository';
 import { faker } from '@faker-js/faker';
-import { CompositionRoot } from '../../../../../Shared/Application/CompositionRoot/CompositionRoot';
 import { DataSource } from 'typeorm';
 import { AppConfiguration } from '../../../../../Shared/Application/Configuration/AppConfiguration';
+import { makeDataSource } from '../../../../../Infrastructure/DatabaseConnection/TypeOrm/AppDataSource';
 
 describe('StudentRepository contract tests', function () {
     let userRepositories: IStudentRepository[];
@@ -15,8 +15,7 @@ describe('StudentRepository contract tests', function () {
 
     before(async () => {
         let config = new AppConfiguration();
-        let compositionRoot = new CompositionRoot(config);
-        dbConnection = await compositionRoot.getTypeOrmDataSource().initialize();
+        dbConnection = await makeDataSource(config.getDatabaseConfiguration()).initialize();
 
         userRepositories = [new InMemoryStudentRepository(), new TypeOrmStudentRepository(dbConnection)];
     });

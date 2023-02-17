@@ -1,4 +1,4 @@
-import { DatabaseConfiguration } from '../../Shared/Application/Configuration/AppConfiguration';
+import { DatabaseConfiguration } from '../../../Shared/Application/Configuration/AppConfiguration';
 import { DataSource } from 'typeorm';
 import { StudentEntity } from './Entities/StudentEntity';
 

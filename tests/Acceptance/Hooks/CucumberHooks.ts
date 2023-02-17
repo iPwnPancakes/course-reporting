@@ -18,7 +18,5 @@ Before(async function () {
 
 After(async function () {
     const compositionRoot: CompositionRoot = this.compositionRoot;
-    if (compositionRoot.getTypeOrmDataSource().isInitialized) {
-        await compositionRoot.getTypeOrmDataSource().destroy();
-    }
+    await compositionRoot.makeDatabaseConnection().disconnect();
 });

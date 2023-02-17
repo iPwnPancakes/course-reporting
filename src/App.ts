@@ -3,22 +3,22 @@ import { CompositionRoot } from './Shared/Application/CompositionRoot/Compositio
 import { InMemoryCurrentUserRepository } from './Modules/Authentication/Repositories/InMemoryCurrentUserRepository';
 import { IStudentRepository } from './Modules/Students/Repositories/StudentRepository/IStudentRepository';
 import { Student } from './Modules/Students/Models/Student';
-import { DataSource } from 'typeorm';
+import { IDatabaseConnection } from './Infrastructure/DatabaseConnection/IDatabaseConnection';
 
 export class App {
 
     private readonly currentUserRepo: InMemoryCurrentUserRepository;
     private readonly userRepo: IStudentRepository;
-    private readonly dbConnection: DataSource;
+    private readonly dbConnection: IDatabaseConnection;
 
     constructor(private readonly compositionRoot: CompositionRoot) {
         this.currentUserRepo = compositionRoot.makeCurrentUserRepository();
         this.userRepo = compositionRoot.makeStudentRepository();
-        this.dbConnection = compositionRoot.getTypeOrmDataSource();
+        this.dbConnection = compositionRoot.makeDatabaseConnection();
     }
 
     public async start() {
-        await this.dbConnection.initialize();
+        await this.dbConnection.connect();
     }
 
     public async createStudent(name: string, email: string) {

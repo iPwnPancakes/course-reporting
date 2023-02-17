@@ -6,7 +6,7 @@ import { IStudentRepository } from '../../../Modules/Students/Repositories/Stude
 import { IEmailService } from '../../../Modules/Email/Contracts/IEmailService';
 import { StubbedEmailService } from '../../../Modules/Email/Services/StubbedEmailService';
 import { DataSource } from 'typeorm';
-import { makeDataSource } from '../../../Infrastructure/TypeOrm/AppDataSource';
+import { makeDataSource } from '../../../Infrastructure/DatabaseConnection/TypeOrm/AppDataSource';
 import { AppConfiguration } from '../Configuration/AppConfiguration';
 import {
     TypeOrmStudentRepository
@@ -14,10 +14,14 @@ import {
 import {
     InMemoryStudentRepository
 } from '../../../Modules/Students/Repositories/StudentRepository/InMemoryStudentRepository/InMemoryStudentRepository';
+import { IDatabaseConnection } from '../../../Infrastructure/DatabaseConnection/IDatabaseConnection';
+import { TypeOrmDatabaseConnection } from '../../../Infrastructure/DatabaseConnection/TypeOrmDatabaseConnection';
+import { StubbedDatabaseConnection } from '../../../Infrastructure/DatabaseConnection/StubbedDatabaseConnection';
 
 export class CompositionRoot {
     private userRepo: IStudentRepository | null = null;
     private appDataSource: DataSource | null = null;
+    private databaseConnection: IDatabaseConnection | null;
 
     constructor(private readonly config: AppConfiguration) {
     }
@@ -40,7 +44,19 @@ export class CompositionRoot {
         return this.userRepo;
     }
 
-    public getTypeOrmDataSource(): DataSource {
+    public makeDatabaseConnection(): IDatabaseConnection {
+        if (!this.databaseConnection) {
+            if (this.config.isProduction()) {
+                this.databaseConnection = new TypeOrmDatabaseConnection(this.getTypeOrmDataSource());
+            } else {
+                this.databaseConnection = new StubbedDatabaseConnection();
+            }
+        }
+
+        return this.databaseConnection;
+    }
+
+    private getTypeOrmDataSource(): DataSource {
         if (!this.appDataSource) {
             let databaseConfiguration = this.makeApplicationConfiguration().getDatabaseConfiguration();
             this.appDataSource = makeDataSource(databaseConfiguration);
