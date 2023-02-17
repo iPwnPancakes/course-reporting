@@ -7,20 +7,22 @@ import { IStudentRepository } from '../IStudentRepository';
 import { faker } from '@faker-js/faker';
 import { CompositionRoot } from '../../../../../Shared/Application/CompositionRoot/CompositionRoot';
 import { DataSource } from 'typeorm';
+import { AppConfiguration } from '../../../../../Shared/Application/Configuration/AppConfiguration';
 
 describe('StudentRepository contract tests', function () {
     let userRepositories: IStudentRepository[];
     let dbConnection: DataSource;
 
     before(async () => {
-        let compositionRoot = new CompositionRoot();
+        let config = new AppConfiguration();
+        let compositionRoot = new CompositionRoot(config);
         dbConnection = await compositionRoot.getTypeOrmDataSource().initialize();
 
         userRepositories = [new InMemoryStudentRepository(), new TypeOrmStudentRepository(dbConnection)];
     });
 
     after(async function () {
-        dbConnection.destroy();
+        await dbConnection.destroy();
     });
 
     describe('addStudent', function () {

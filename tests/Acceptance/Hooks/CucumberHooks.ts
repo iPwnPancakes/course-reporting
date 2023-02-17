@@ -2,9 +2,11 @@ import { After, Before } from '@cucumber/cucumber';
 import { App } from '../../../src/App';
 import { CompositionRoot } from '../../../src/Shared/Application/CompositionRoot/CompositionRoot';
 import { RandomValueMap } from '../TestInfrastructure/RandomValueMap';
+import { AppConfiguration } from '../../../src/Shared/Application/Configuration/AppConfiguration';
 
 Before(async function () {
-    const compositionRoot = new CompositionRoot();
+    const config = new AppConfiguration();
+    const compositionRoot = new CompositionRoot(config);
     const app = new App(compositionRoot);
 
     await app.start();

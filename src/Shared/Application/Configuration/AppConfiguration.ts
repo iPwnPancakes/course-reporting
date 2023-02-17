@@ -8,6 +8,10 @@ export interface DatabaseConfiguration {
 }
 
 export class AppConfiguration {
+    public isProduction(): boolean {
+        return process.env.APP_ENV === 'production' || process.env.APP_ENV === 'prod';
+    }
+
     public getDatabaseConfiguration(): DatabaseConfiguration {
         return {
             type: process.env.DB_TYPE as 'mysql' | 'postgres' | 'sqlite',

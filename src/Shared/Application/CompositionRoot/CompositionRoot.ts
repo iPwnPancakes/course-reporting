@@ -16,6 +16,9 @@ export class CompositionRoot {
     private userRepo: IStudentRepository | null = null;
     private appDataSource: DataSource | null = null;
 
+    constructor(private readonly config: AppConfiguration) {
+    }
+
     public makeCurrentUserRepository(): InMemoryCurrentUserRepository {
         return new InMemoryCurrentUserRepository();
     }
