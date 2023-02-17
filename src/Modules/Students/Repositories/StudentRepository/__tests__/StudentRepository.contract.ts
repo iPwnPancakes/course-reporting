@@ -1,6 +1,6 @@
 import { InMemoryStudentRepository } from '../InMemoryStudentRepository/InMemoryStudentRepository';
 import { TypeOrmStudentRepository } from '../TypeOrmStudentRepository/TypeOrmStudentRepository';
-import { MySqlDataSource } from '../../../../../Infrastructure/TypeOrm/MySqlDataSource';
+import { AppDataSource } from '../../../../../Infrastructure/TypeOrm/AppDataSource';
 import { Student } from '../../../Models/Student';
 import { expect } from 'chai';
 import { before } from 'mocha';
@@ -11,7 +11,7 @@ describe('StudentRepository contract tests', function () {
     let userRepositories: IStudentRepository[];
 
     before(async () => {
-        let dbConnection = await MySqlDataSource.initialize();
+        let dbConnection = await AppDataSource.initialize();
         userRepositories = [new InMemoryStudentRepository(), new TypeOrmStudentRepository(dbConnection)];
     });
 

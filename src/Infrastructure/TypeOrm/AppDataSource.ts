@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import { StudentEntity } from './Entities/StudentEntity';
 
-export const MySqlDataSource = new DataSource({
+export const AppDataSource = new DataSource({
     type: process.env.DB_TYPE as 'mysql' | 'postgres' | 'sqlite',
     host: process.env.DB_HOST,
     username: process.env.DB_USERNAME,

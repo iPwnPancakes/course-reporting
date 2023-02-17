@@ -12,7 +12,7 @@
         "test:unit": "mocha -r ts-node/register src/**/*.spec.ts",
         "test:contract": "mocha -r ts-node/register -r dotenv/config src/**/*.contract.ts",
         "typeorm": "typeorm-ts-node-commonjs",
-        "typeorm:migrate": "typeorm-ts-node-commonjs migration:run -d src/Infrastructure/TypeOrm/MySqlDataSource.ts"
+        "typeorm:migrate": "typeorm-ts-node-commonjs migration:run -d src/Infrastructure/TypeOrm/AppDataSource.ts"
     },
     "author": "",
     "license": "ISC",
