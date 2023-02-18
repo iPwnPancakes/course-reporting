@@ -19,6 +19,8 @@ import { TypeOrmDatabaseConnection } from '../../../Infrastructure/DatabaseConne
 import { StubbedDatabaseConnection } from '../../../Infrastructure/DatabaseConnection/StubbedDatabaseConnection';
 import { IHttpServer } from '../../../Infrastructure/Http/IHttpServer';
 import { StubbedHttpServer } from '../../../Infrastructure/Http/StubbedHttpServer';
+import { HapiHttpServer } from '../../../Infrastructure/Http/HapiHttpServer';
+import { makeHapiServer } from '../../../Infrastructure/Http/Hapi/makeHapiServer';
 
 export class CompositionRoot {
     private userRepo: IStudentRepository | null = null;
@@ -61,7 +63,9 @@ export class CompositionRoot {
 
     public makeHttpServer(): IHttpServer {
         if (!this.httpServer) {
-            this.httpServer = new StubbedHttpServer();
+            this.httpServer = this.config.isProduction() ?
+                new HapiHttpServer(makeHapiServer(this.config.getHttpConfiguration())) :
+                new StubbedHttpServer();
         }
 
         return this.httpServer;
