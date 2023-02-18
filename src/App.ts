@@ -4,21 +4,25 @@ import { InMemoryCurrentUserRepository } from './Modules/Authentication/Reposito
 import { IStudentRepository } from './Modules/Students/Repositories/StudentRepository/IStudentRepository';
 import { Student } from './Modules/Students/Models/Student';
 import { IDatabaseConnection } from './Infrastructure/DatabaseConnection/IDatabaseConnection';
+import { IHttpServer } from './Infrastructure/Http/IHttpServer';
 
 export class App {
 
     private readonly currentUserRepo: InMemoryCurrentUserRepository;
     private readonly userRepo: IStudentRepository;
     private readonly dbConnection: IDatabaseConnection;
+    private readonly httpServer: IHttpServer;
 
     constructor(private readonly compositionRoot: CompositionRoot) {
         this.currentUserRepo = compositionRoot.makeCurrentUserRepository();
         this.userRepo = compositionRoot.makeStudentRepository();
         this.dbConnection = compositionRoot.makeDatabaseConnection();
+        this.httpServer = compositionRoot.makeHttpServer();
     }
 
     public async start() {
         await this.dbConnection.connect();
+        await this.httpServer.start();
     }
 
     public async createStudent(name: string, email: string) {

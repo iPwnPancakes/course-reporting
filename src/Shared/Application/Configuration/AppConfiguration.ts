@@ -7,9 +7,21 @@ export interface DatabaseConfiguration {
     connector: 'mysql' | 'mysql2';
 }
 
+export interface HttpConfiguration {
+    host: string,
+    port: number;
+}
+
 export class AppConfiguration {
     public isProduction(): boolean {
         return process.env.APP_ENV === 'production' || process.env.APP_ENV === 'prod';
+    }
+
+    public getHttpConfiguration(): HttpConfiguration {
+        return {
+            host: process.env.HOST,
+            port: Number(process.env.PORT)
+        };
     }
 
     public getDatabaseConfiguration(): DatabaseConfiguration {

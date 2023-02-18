@@ -17,11 +17,14 @@ import {
 import { IDatabaseConnection } from '../../../Infrastructure/DatabaseConnection/IDatabaseConnection';
 import { TypeOrmDatabaseConnection } from '../../../Infrastructure/DatabaseConnection/TypeOrmDatabaseConnection';
 import { StubbedDatabaseConnection } from '../../../Infrastructure/DatabaseConnection/StubbedDatabaseConnection';
+import { IHttpServer } from '../../../Infrastructure/Http/IHttpServer';
+import { StubbedHttpServer } from '../../../Infrastructure/Http/StubbedHttpServer';
 
 export class CompositionRoot {
     private userRepo: IStudentRepository | null = null;
     private appDataSource: DataSource | null = null;
     private databaseConnection: IDatabaseConnection | null;
+    private httpServer: IHttpServer | null;
 
     constructor(private readonly config: AppConfiguration) {
     }
@@ -54,6 +57,14 @@ export class CompositionRoot {
         }
 
         return this.databaseConnection;
+    }
+
+    public makeHttpServer(): IHttpServer {
+        if (!this.httpServer) {
+            this.httpServer = new StubbedHttpServer();
+        }
+
+        return this.httpServer;
     }
 
     private getTypeOrmDataSource(): DataSource {
