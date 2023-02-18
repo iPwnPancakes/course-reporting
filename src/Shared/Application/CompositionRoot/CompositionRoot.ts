@@ -51,11 +51,9 @@ export class CompositionRoot {
 
     public makeDatabaseConnection(): IDatabaseConnection {
         if (!this.databaseConnection) {
-            if (this.config.isProduction()) {
-                this.databaseConnection = new TypeOrmDatabaseConnection(this.getTypeOrmDataSource());
-            } else {
-                this.databaseConnection = new StubbedDatabaseConnection();
-            }
+            this.databaseConnection = this.config.isProduction() ?
+                new TypeOrmDatabaseConnection(this.getTypeOrmDataSource()) :
+                new StubbedDatabaseConnection();
         }
 
         return this.databaseConnection;
