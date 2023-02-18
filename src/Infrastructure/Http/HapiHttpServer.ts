@@ -8,4 +8,8 @@ export class HapiHttpServer implements IHttpServer {
     async start(): Promise<void> {
         await this.hapiServer.start();
     }
+
+    async stop(): Promise<void> {
+        await this.hapiServer.stop();
+    }
 }

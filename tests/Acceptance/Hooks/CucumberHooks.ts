@@ -19,4 +19,5 @@ Before(async function () {
 After(async function () {
     const compositionRoot: CompositionRoot = this.compositionRoot;
     await compositionRoot.makeDatabaseConnection().disconnect();
+    await compositionRoot.makeHttpServer().stop();
 });
