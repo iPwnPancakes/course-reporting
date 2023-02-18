@@ -15,7 +15,7 @@ When(/I go to register a new Student named (.*) with email (.*)/, async function
     if (/^[a-zA-Z]+$/.test(name)) {
         map.mapKeyToAlphabeticString(name);
     } else {
-        map.mapKeyToAlphaNumericString(name);
+        map.mapKeyToValue(name, name);
     }
 
     if (/^.+@.+$/.test(email)) {

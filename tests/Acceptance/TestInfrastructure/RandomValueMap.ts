@@ -7,10 +7,6 @@ export class RandomValueMap {
         this.map[key] = faker.random.alpha(30);
     }
 
-    public mapKeyToAlphaNumericString(key: string): void {
-        this.map[key] = faker.random.alphaNumeric(30);
-    }
-
     public mapEmailToRandomEmail(key: string): void {
         this.map[key] = faker.internet.email();
     }
@@ -20,7 +16,7 @@ export class RandomValueMap {
     }
 
     public get(key: string): string {
-        if (!this.map[key]) {
+        if (this.map[key] === undefined) {
             throw new Error('Key does not have associated value');
         }
 
