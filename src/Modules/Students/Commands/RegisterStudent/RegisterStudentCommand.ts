@@ -2,9 +2,9 @@ import { CommandHandler } from '../../../../Shared/Application/Command/CommandHa
 import { RegisterStudentRequest } from './RegisterStudentRequest';
 import { Student } from '../../Models/Student';
 import { IStudentRepository } from '../../Repositories/StudentRepository/IStudentRepository';
-import { Result } from "../../../../Shared/Application/Result/Result";
-import { InvalidOperationError } from "./RegisterStudentErrors";
-import { IEmailService } from "../../../Email/Contracts/IEmailService";
+import { Result } from '../../../../Shared/Application/Result/Result';
+import { InvalidOperationError } from './RegisterStudentErrors';
+import { IEmailService } from '../../../Email/Contracts/IEmailService';
 
 export class RegisterStudentCommand implements CommandHandler<RegisterStudentRequest, Promise<Result<Student, Error>>> {
     constructor(private readonly studentRepo: IStudentRepository, private readonly emailService: IEmailService) {
@@ -17,7 +17,7 @@ export class RegisterStudentCommand implements CommandHandler<RegisterStudentReq
         }
 
         if (await this.studentRepo.contains(studentOrError.value)) {
-            return { ok: false, error: new InvalidOperationError() };
+            return { ok: false, error: new InvalidOperationError('Student already exists') };
         }
 
         const registeredStudent = await this.studentRepo.addStudent(studentOrError.value);

@@ -21,6 +21,7 @@ import { IHttpServer } from '../../../Infrastructure/Http/IHttpServer';
 import { StubbedHttpServer } from '../../../Infrastructure/Http/StubbedHttpServer';
 import { HapiHttpServer } from '../../../Infrastructure/Http/HapiHttpServer';
 import { makeHapiServer } from '../../../Infrastructure/Http/Hapi/makeHapiServer';
+import { StudentController } from '../../../Infrastructure/Http/Hapi/Routes/StudentController';
 
 export class CompositionRoot {
     private userRepo: IStudentRepository | null = null;
@@ -61,12 +62,19 @@ export class CompositionRoot {
 
     public makeHttpServer(): IHttpServer {
         if (!this.httpServer) {
-            this.httpServer = this.config.isProduction() ?
-                new HapiHttpServer(makeHapiServer(this.config.getHttpConfiguration())) :
-                new StubbedHttpServer();
+            this.httpServer = this.config.isProduction() ? this.makeHapiHttpServer() : new StubbedHttpServer();
         }
 
         return this.httpServer;
+    }
+
+    private makeHapiHttpServer() {
+        let hapiServer = makeHapiServer(this.config.getHttpConfiguration(), [...this.makeStudentController().getRoutes()]);
+        return new HapiHttpServer(hapiServer);
+    }
+
+    private makeStudentController(): StudentController {
+        return new StudentController(this.makeRegisterStudentCommand());
     }
 
     private getTypeOrmDataSource(): DataSource {

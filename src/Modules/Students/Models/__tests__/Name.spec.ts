@@ -1,5 +1,6 @@
 import { Name } from '../Name';
 import { expect } from 'chai';
+import { ApplicationError } from '../../../../Shared/Application/Errors/ApplicationError';
 
 describe('Name', function () {
     describe('make', function () {
@@ -27,7 +28,7 @@ describe('Name', function () {
                 throw new Error('should have failed');
             }
 
-            expect(nameOrError.error instanceof Error).to.equal(true);
+            expect(nameOrError.error instanceof ApplicationError).to.equal(true);
         });
     });
 });
