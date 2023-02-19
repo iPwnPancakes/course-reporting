@@ -22,14 +22,28 @@ import { StubbedHttpServer } from '../../../Infrastructure/Http/StubbedHttpServe
 import { HapiHttpServer } from '../../../Infrastructure/Http/HapiHttpServer';
 import { makeHapiServer } from '../../../Infrastructure/Http/Hapi/makeHapiServer';
 import { StudentController } from '../../../Infrastructure/Http/Hapi/Routes/StudentController';
+import { App } from '../../../App';
 
 export class CompositionRoot {
+    private app: App | null = null;
     private userRepo: IStudentRepository | null = null;
     private appDataSource: DataSource | null = null;
     private databaseConnection: IDatabaseConnection | null;
     private httpServer: IHttpServer | null;
 
     constructor(private readonly config: AppConfiguration) {
+    }
+
+    public makeApplication(): App {
+        if (!this.app) {
+            this.app = new App(
+                this.makeCurrentUserRepository(),
+                this.makeStudentRepository(),
+                this.makeRegisterStudentCommand()
+            );
+        }
+
+        return this.app;
     }
 
     public makeCurrentUserRepository(): InMemoryCurrentUserRepository {
@@ -60,21 +74,21 @@ export class CompositionRoot {
         return this.databaseConnection;
     }
 
-    public makeHttpServer(): IHttpServer {
+    public makeHttpServer(app: App): IHttpServer {
         if (!this.httpServer) {
-            this.httpServer = this.config.isProduction() ? this.makeHapiHttpServer() : new StubbedHttpServer();
+            this.httpServer = this.config.isProduction() ? this.makeHapiHttpServer(app) : new StubbedHttpServer();
         }
 
         return this.httpServer;
     }
 
-    private makeHapiHttpServer() {
-        let hapiServer = makeHapiServer(this.config.getHttpConfiguration(), [...this.makeStudentController().getRoutes()]);
+    private makeHapiHttpServer(app: App) {
+        let hapiServer = makeHapiServer(this.config.getHttpConfiguration(), [...this.makeStudentController(app).getRoutes()]);
         return new HapiHttpServer(hapiServer);
     }
 
-    private makeStudentController(): StudentController {
-        return new StudentController(this.makeRegisterStudentCommand());
+    private makeStudentController(app: App): StudentController {
+        return new StudentController(app);
     }
 
     private getTypeOrmDataSource(): DataSource {

@@ -1,11 +1,14 @@
-import { App } from './App';
 import { CompositionRoot } from './Shared/Application/CompositionRoot/CompositionRoot';
 import { AppConfiguration } from './Shared/Application/Configuration/AppConfiguration';
 
 const config = new AppConfiguration();
 const compositionRoot = new CompositionRoot(config);
-const app = new App(compositionRoot);
+const app = compositionRoot.makeApplication();
+const httpServer = compositionRoot.makeHttpServer(app);
+const dbConnection = compositionRoot.makeDatabaseConnection();
 
-app.start().then(() => {
-    console.log('hello world');
-});
+dbConnection.connect()
+    .then(() => httpServer.start())
+    .then(() => {
+        console.log('hello world');
+    });

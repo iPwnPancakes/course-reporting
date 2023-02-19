@@ -1,13 +1,12 @@
 import { IRouteController } from '../IRouteController';
 import { Request, ResponseToolkit, ServerRoute } from '@hapi/hapi';
-import { RegisterStudentCommand } from '../../../../Modules/Students/Commands/RegisterStudent/RegisterStudentCommand';
-import { RegisterStudentRequest } from '../../../../Modules/Students/Commands/RegisterStudent/RegisterStudentRequest';
 import { ApplicationError } from '../../../../Shared/Application/Errors/ApplicationError';
+import { App } from '../../../../App';
 
 export class StudentController implements IRouteController {
     private readonly prefix: string = '/students';
 
-    constructor(private readonly registerStudentHandler: RegisterStudentCommand) {
+    constructor(private readonly app: App) {
     }
 
     public getRoutes(): ServerRoute[] {
@@ -26,9 +25,7 @@ export class StudentController implements IRouteController {
             return h.response('Missing name or email').code(400);
         }
 
-        const dto: RegisterStudentRequest = { name: String(req.payload.name), email: String(req.payload.email) };
-
-        const response = await this.registerStudentHandler.handle(dto);
+        const response = await this.app.createStudent(String(req.payload.name), String(req.payload.email));
         if (response.ok === false) {
             const error = response.error;
             if (error instanceof ApplicationError) {

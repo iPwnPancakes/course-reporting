@@ -3,21 +3,33 @@ import { App } from '../../../src/App';
 import { CompositionRoot } from '../../../src/Shared/Application/CompositionRoot/CompositionRoot';
 import { RandomValueMap } from '../TestInfrastructure/RandomValueMap';
 import { AppConfiguration } from '../../../src/Shared/Application/Configuration/AppConfiguration';
+import { IHttpServer } from '../../../src/Infrastructure/Http/IHttpServer';
+import { IDatabaseConnection } from '../../../src/Infrastructure/DatabaseConnection/IDatabaseConnection';
 
 Before(async function () {
     const config = new AppConfiguration();
     const compositionRoot = new CompositionRoot(config);
-    const app = new App(compositionRoot);
+    const app = new App(
+        compositionRoot.makeCurrentUserRepository(),
+        compositionRoot.makeStudentRepository(),
+        compositionRoot.makeRegisterStudentCommand()
+    );
+    const dbConnection = compositionRoot.makeDatabaseConnection();
+    const httpServer = compositionRoot.makeHttpServer(app);
 
-    await app.start();
+    await dbConnection.connect();
+    await httpServer.start();
 
-    this.compositionRoot = compositionRoot;
+    this.dbConnection = dbConnection;
+    this.httpServer = httpServer;
     this.app = app;
     this.map = new RandomValueMap();
 });
 
 After(async function () {
-    const compositionRoot: CompositionRoot = this.compositionRoot;
-    await compositionRoot.makeDatabaseConnection().disconnect();
-    await compositionRoot.makeHttpServer().stop();
+    const httpServer: IHttpServer = this.httpServer;
+    const dbConnection: IDatabaseConnection = this.dbConnection;
+
+    await httpServer.stop();
+    await dbConnection.disconnect();
 });
