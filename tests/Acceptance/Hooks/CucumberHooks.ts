@@ -8,6 +8,10 @@ import { TestHttpClient } from '../TestInfrastructure/TestHttpClient';
 
 Before(async function () {
     const config = new AppConfiguration();
+    if (!config.isProduction()) {
+        throw new Error('Acceptance tests may only be run when using production environment in .env file');
+    }
+
     const compositionRoot = new CompositionRoot(config);
     const app = compositionRoot.makeApplication();
     const dbConnection = compositionRoot.makeDatabaseConnection();
