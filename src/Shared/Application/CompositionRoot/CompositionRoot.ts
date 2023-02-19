@@ -46,24 +46,6 @@ export class CompositionRoot {
         return this.app;
     }
 
-    public makeCurrentUserRepository(): InMemoryCurrentUserRepository {
-        return new InMemoryCurrentUserRepository();
-    }
-
-    public makeRegisterStudentCommand() {
-        return new RegisterStudentCommand(this.makeStudentRepository(), this.makeEmailService());
-    }
-
-    public makeStudentRepository(): IStudentRepository {
-        if (!this.userRepo) {
-            this.userRepo = this.config.isProduction() ?
-                new TypeOrmStudentRepository(this.getTypeOrmDataSource()) :
-                new InMemoryStudentRepository();
-        }
-
-        return this.userRepo;
-    }
-
     public makeDatabaseConnection(): IDatabaseConnection {
         if (!this.databaseConnection) {
             this.databaseConnection = this.config.isProduction() ?
@@ -80,6 +62,24 @@ export class CompositionRoot {
         }
 
         return this.httpServer;
+    }
+
+    private makeCurrentUserRepository(): InMemoryCurrentUserRepository {
+        return new InMemoryCurrentUserRepository();
+    }
+
+    private makeRegisterStudentCommand() {
+        return new RegisterStudentCommand(this.makeStudentRepository(), this.makeEmailService());
+    }
+
+    private makeStudentRepository(): IStudentRepository {
+        if (!this.userRepo) {
+            this.userRepo = this.config.isProduction() ?
+                new TypeOrmStudentRepository(this.getTypeOrmDataSource()) :
+                new InMemoryStudentRepository();
+        }
+
+        return this.userRepo;
     }
 
     private makeHapiHttpServer(app: App) {

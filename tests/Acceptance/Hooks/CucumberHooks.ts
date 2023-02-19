@@ -1,5 +1,4 @@
 import { After, Before } from '@cucumber/cucumber';
-import { App } from '../../../src/App';
 import { CompositionRoot } from '../../../src/Shared/Application/CompositionRoot/CompositionRoot';
 import { RandomValueMap } from '../TestInfrastructure/RandomValueMap';
 import { AppConfiguration } from '../../../src/Shared/Application/Configuration/AppConfiguration';
@@ -9,11 +8,7 @@ import { IDatabaseConnection } from '../../../src/Infrastructure/DatabaseConnect
 Before(async function () {
     const config = new AppConfiguration();
     const compositionRoot = new CompositionRoot(config);
-    const app = new App(
-        compositionRoot.makeCurrentUserRepository(),
-        compositionRoot.makeStudentRepository(),
-        compositionRoot.makeRegisterStudentCommand()
-    );
+    const app = compositionRoot.makeApplication();
     const dbConnection = compositionRoot.makeDatabaseConnection();
     const httpServer = compositionRoot.makeHttpServer(app);
 
