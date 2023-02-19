@@ -4,7 +4,6 @@ export interface DatabaseConfiguration {
     username: string;
     password: string;
     database: string;
-    connector: 'mysql' | 'mysql2';
 }
 
 export interface HttpConfiguration {
@@ -30,8 +29,7 @@ export class AppConfiguration {
             host: process.env.DB_HOST,
             username: process.env.DB_USERNAME,
             password: process.env.DB_PASSWORD,
-            database: process.env.DB_DATABASE,
-            connector: process.env.DB_CONNECTOR as 'mysql' | 'mysql2'
+            database: process.env.DB_DATABASE
         };
     }
 }

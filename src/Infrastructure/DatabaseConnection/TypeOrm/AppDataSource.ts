@@ -3,7 +3,7 @@ import { DataSource } from 'typeorm';
 import { StudentEntity } from './Entities/StudentEntity';
 
 export function makeDataSource(config: DatabaseConfiguration): DataSource {
-    const { type, host, username, password, connector, database } = config;
+    const { type, host, username, password, database } = config;
 
     return new DataSource({
         type,
@@ -11,7 +11,7 @@ export function makeDataSource(config: DatabaseConfiguration): DataSource {
         username,
         password,
         database,
-        connectorPackage: connector,
+        connectorPackage: 'mysql2',
         entities: [StudentEntity],
         migrations: ['src/Infrastructure/TypeOrm/Migrations/*.ts'],
         synchronize: false
