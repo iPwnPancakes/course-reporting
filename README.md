@@ -23,3 +23,9 @@ Modify anything with the `DB_` prefix to point to your instance of MySQL.
 ### Using the HTTP server (Production env only)
 
 Modify the http server's `HOST` and `PORT`.
+
+### Transpiling to JS
+
+```bash
+npm run build
+```
