@@ -2,6 +2,7 @@ import { Given, Then, When } from '@cucumber/cucumber';
 import { expect } from 'chai';
 import { App } from '../../../src/App';
 import { RandomValueMap } from '../TestInfrastructure/RandomValueMap';
+import { TestHttpClient } from '../TestInfrastructure/TestHttpClient';
 
 Given('I am a Teacher', function () {
     const app: App = this.app;
@@ -9,8 +10,8 @@ Given('I am a Teacher', function () {
 });
 
 When(/I go to register a new Student named (.*) with email (.*)/, async function (name: string, email: string) {
-    const app: App = this.app;
     const map: RandomValueMap = this.map;
+    const http: TestHttpClient = this.http;
 
     if (/^[a-zA-Z]+$/.test(name)) {
         map.mapKeyToAlphabeticString(name);
@@ -24,7 +25,7 @@ When(/I go to register a new Student named (.*) with email (.*)/, async function
         map.mapKeyToValue(email, email);
     }
 
-    await app.createStudent(map.get(name), map.get(email));
+    await http.post('/students/addStudent', { name: map.get(name), email: map.get(email) });
 });
 
 Then(/I should see (.*) in the Student List/, async function (name: string) {
