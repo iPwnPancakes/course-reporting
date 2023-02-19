@@ -16,9 +16,9 @@ cp .env.example .env
 npm run start
 ```
 
-### Using a database (Production env only)
+### Using a MySQL database (Production env only)
 
-Modify anything with the `DB_` prefix to point to your TypeORM compatible database of choice.
+Modify anything with the `DB_` prefix to point to your instance of MySQL.
 
 ### Using the HTTP server (Production env only)
 
