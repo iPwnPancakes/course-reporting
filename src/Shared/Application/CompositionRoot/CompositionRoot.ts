@@ -23,6 +23,8 @@ import { HapiHttpServer } from '../../../Infrastructure/Http/HapiHttpServer';
 import { makeHapiServer } from '../../../Infrastructure/Http/Hapi/makeHapiServer';
 import { StudentController } from '../../../Infrastructure/Http/Hapi/Routes/StudentController';
 import { App } from '../../../App';
+import { CommandMap } from "../Command/CommandMap";
+import { CommandMediator } from "../Command/CommandMediator";
 
 export class CompositionRoot {
     private app: App | null = null;
@@ -39,7 +41,8 @@ export class CompositionRoot {
             this.app = new App(
                 this.makeCurrentUserRepository(),
                 this.makeStudentRepository(),
-                this.makeRegisterStudentCommand()
+                this.makeRegisterStudentCommand(),
+                this.makeCommandRouter()
             );
         }
 
@@ -62,6 +65,16 @@ export class CompositionRoot {
         }
 
         return this.httpServer;
+    }
+
+    public makeCommandRouter(): CommandMediator {
+        return new CommandMediator(this.makeApplicationCommandMap());
+    }
+
+    private makeApplicationCommandMap(): CommandMap {
+        const registerStudentCommand = this.makeRegisterStudentCommand();
+
+        return { [registerStudentCommand.key]: registerStudentCommand };
     }
 
     private makeCurrentUserRepository(): InMemoryCurrentUserRepository {

@@ -3,12 +3,15 @@ import { InMemoryCurrentUserRepository } from './Modules/Authentication/Reposito
 import { IStudentRepository } from './Modules/Students/Repositories/StudentRepository/IStudentRepository';
 import { Student } from './Modules/Students/Models/Student';
 import { RegisterStudentCommand } from './Modules/Students/Commands/RegisterStudent/RegisterStudentCommand';
+import { CommandMediator } from "./Shared/Application/Command/CommandMediator";
+import { CommandRequest } from "./Shared/Application/Command/CommandRequest";
 
 export class App {
     constructor(
         private readonly currentUserRepo: InMemoryCurrentUserRepository,
         private readonly studentRepository: IStudentRepository,
-        private readonly registerStudentCommand: RegisterStudentCommand
+        private readonly registerStudentCommand: RegisterStudentCommand,
+        private readonly commandRouter: CommandMediator
     ) {
     }
 
@@ -16,6 +19,10 @@ export class App {
         const request = new RegisterStudentRequest(name, email);
 
         return this.registerStudentCommand.handle(request);
+    }
+
+    public route<T>(request: CommandRequest): T {
+        return this.commandRouter.route<T>(request);
     }
 
     login(username: string) {
