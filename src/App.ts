@@ -1,4 +1,3 @@
-import { RegisterStudentRequest } from './Modules/Students/Commands/RegisterStudent/RegisterStudentRequest';
 import { InMemoryCurrentUserRepository } from './Modules/Authentication/Repositories/InMemoryCurrentUserRepository';
 import { IStudentRepository } from './Modules/Students/Repositories/StudentRepository/IStudentRepository';
 import { Student } from './Modules/Students/Models/Student';
