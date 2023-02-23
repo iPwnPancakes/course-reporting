@@ -18,5 +18,17 @@ describe('CommandMediator', function () {
 
             expect(handleCalled).to.be.true;
         });
+
+        it('should return whatever the command handler returns', () => {
+            const key = 'test';
+            const request: CommandRequest = { key };
+            const command: CommandHandler<{ _testProperty: Number }> = { key, handle: () => ({ _testProperty: -123 }) };
+            const commandMap: CommandMap = { [key]: command };
+            const router = new CommandMediator(commandMap);
+
+            const response = router.route<{ _testProperty: Number }>(request);
+
+            expect(response._testProperty).to.equal(-123);
+        })
     });
 });
