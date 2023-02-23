@@ -2,6 +2,8 @@ import { IRouteController } from '../IRouteController';
 import { Request, ResponseToolkit, ServerRoute } from '@hapi/hapi';
 import { ApplicationError } from '../../../../Shared/Application/Errors/ApplicationError';
 import { App } from '../../../../App';
+import { RegisterStudentRequest } from "../../../../Modules/Students/Commands/RegisterStudent/RegisterStudentRequest";
+import { RegisterStudentResponse } from "../../../../Modules/Students/Commands/RegisterStudent/RegisterStudentCommand";
 
 export class StudentController implements IRouteController {
     private readonly prefix: string = '/students';
@@ -25,7 +27,9 @@ export class StudentController implements IRouteController {
             return h.response('Missing name or email').code(400);
         }
 
-        const response = await this.app.createStudent(String(req.payload.name), String(req.payload.email));
+        const createStudentRequest = new RegisterStudentRequest(String(req.payload.name), String(req.payload.email));
+        const response = await this.app.route<RegisterStudentResponse>(createStudentRequest);
+
         if (response.ok === false) {
             const error = response.error;
             if (error instanceof ApplicationError) {
