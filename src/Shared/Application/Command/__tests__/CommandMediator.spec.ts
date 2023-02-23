@@ -10,11 +10,11 @@ describe('CommandMediator', function () {
             const key = 'test';
             let handleCalled = false;
             const request: CommandRequest = { key };
-            const command: CommandHandler = { key, handle() { handleCalled = true; } };
+            const command: CommandHandler<void> = { key, handle() { handleCalled = true; } };
             const commandMap: CommandMap = { [key]: command };
             const router = new CommandMediator(commandMap);
 
-            const response = router.route(request);
+            router.route(request);
 
             expect(handleCalled).to.be.true;
         });

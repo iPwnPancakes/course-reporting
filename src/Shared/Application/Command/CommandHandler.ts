@@ -1,7 +1,7 @@
 import { CommandRequest } from "./CommandRequest";
 
-export interface CommandHandler {
+export interface CommandHandler<T> {
     readonly key: string;
 
-    handle(request: CommandRequest): any;
+    handle(request: CommandRequest): T;
 }
