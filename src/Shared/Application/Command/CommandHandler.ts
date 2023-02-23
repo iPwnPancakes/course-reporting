@@ -1,3 +1,7 @@
-export interface CommandHandler<RequestType, ResponseType> {
-    handle(request: RequestType): ResponseType;
+import { CommandRequest } from "./CommandRequest";
+
+export interface CommandHandler {
+    readonly key: string;
+
+    handle(request: CommandRequest): any;
 }

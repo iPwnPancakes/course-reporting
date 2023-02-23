@@ -13,7 +13,7 @@ export class App {
     }
 
     public async createStudent(name: string, email: string) {
-        const request: RegisterStudentRequest = { name, email };
+        const request = new RegisterStudentRequest(name, email);
 
         return this.registerStudentCommand.handle(request);
     }

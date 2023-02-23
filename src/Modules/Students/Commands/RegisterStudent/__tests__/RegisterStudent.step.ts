@@ -6,6 +6,7 @@ import { Student } from "../../../Models/Student";
 import { Result } from "../../../../../Shared/Application/Result/Result";
 import { IEmailService } from "../../../../Email/Contracts/IEmailService";
 import { capture, instance, mock, when } from "ts-mockito";
+import { RegisterStudentRequest } from "../RegisterStudentRequest";
 
 let mockEmailService: IEmailService;
 let useCase: RegisterStudentCommand;
@@ -18,7 +19,7 @@ Given('the RegisterStudent handler', function () {
 });
 
 When(/I register a Student named (.*) with email (.*)/, async function (name: string, email: string) {
-    response = await useCase.handle({ name, email });
+    response = await useCase.handle(new RegisterStudentRequest(name, email));
 });
 
 Then(/I should get back a Student named (.*) with email (.*)/, function (name: string, email: string) {
@@ -41,7 +42,7 @@ Then(/I should get back an error/, function () {
 });
 
 Given(/^a Student with name (.*) and email (.*) is already registered$/, function (name: string, email: string) {
-    useCase.handle({ name, email });
+    useCase.handle(new RegisterStudentRequest(name, email));
 });
 Then(/^an email should be sent to (.*) that (.*) has been registered$/, function (email: string, name: string) {
     const [studentName, subjects] = capture(mockEmailService.sendNewStudentRegistrationEmail).last();

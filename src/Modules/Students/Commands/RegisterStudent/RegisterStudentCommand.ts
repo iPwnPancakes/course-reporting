@@ -6,7 +6,9 @@ import { Result } from '../../../../Shared/Application/Result/Result';
 import { InvalidOperationError } from './RegisterStudentErrors';
 import { IEmailService } from '../../../Email/Contracts/IEmailService';
 
-export class RegisterStudentCommand implements CommandHandler<RegisterStudentRequest, Promise<Result<Student, Error>>> {
+export class RegisterStudentCommand implements CommandHandler {
+    public readonly key = 'RegisterStudentCommand';
+
     constructor(private readonly studentRepo: IStudentRepository, private readonly emailService: IEmailService) {
     }
 

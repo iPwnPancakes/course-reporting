@@ -1,5 +1,7 @@
 import { CommandRequest } from '../../../../Shared/Application/Command/CommandRequest';
 
-export interface AuthenticateUserRequest extends CommandRequest {
-    name: string;
+export class AuthenticateUserRequest implements CommandRequest {
+    public readonly key = 'AuthenticateUserCommand';
+
+    constructor(public readonly name: string) {}
 }
