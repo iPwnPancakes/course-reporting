@@ -15,12 +15,6 @@ export class App {
     ) {
     }
 
-    public async createStudent(name: string, email: string) {
-        const request = new RegisterStudentRequest(name, email);
-
-        return this.registerStudentCommand.handle(request);
-    }
-
     public route<T>(request: CommandRequest): T {
         return this.commandRouter.route<T>(request);
     }
