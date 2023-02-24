@@ -13,7 +13,10 @@ Before(async function () {
     }
 
     const compositionRoot = new CompositionRoot(config);
-    const app = compositionRoot.makeApplication();
+
+    const commandRouter = compositionRoot.makeCommandRouter();
+
+    const app = compositionRoot.makeApplication(commandRouter);
     const dbConnection = compositionRoot.makeDatabaseConnection();
     const httpServer = compositionRoot.makeHttpServer(app);
     const { host, port } = config.getHttpConfiguration();

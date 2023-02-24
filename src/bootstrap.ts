@@ -3,7 +3,8 @@ import { AppConfiguration } from './Shared/Application/Configuration/AppConfigur
 
 const config = new AppConfiguration();
 const compositionRoot = new CompositionRoot(config);
-const app = compositionRoot.makeApplication();
+const commandRouter = compositionRoot.makeCommandRouter();
+const app = compositionRoot.makeApplication(commandRouter);
 const httpServer = compositionRoot.makeHttpServer(app);
 const dbConnection = compositionRoot.makeDatabaseConnection();
 

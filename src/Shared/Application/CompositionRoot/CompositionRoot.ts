@@ -36,13 +36,13 @@ export class CompositionRoot {
     constructor(private readonly config: AppConfiguration) {
     }
 
-    public makeApplication(): App {
+    public makeApplication(commandRouter: CommandMediator): App {
         if (!this.app) {
             this.app = new App(
                 this.makeCurrentUserRepository(),
                 this.makeStudentRepository(),
                 this.makeRegisterStudentCommand(),
-                this.makeCommandRouter()
+                commandRouter
             );
         }
 
@@ -67,14 +67,18 @@ export class CompositionRoot {
         return this.httpServer;
     }
 
-    public makeCommandRouter(): CommandMediator {
-        return new CommandMediator(this.makeApplicationCommandMap());
+    public makeCommandRouter(commandMap?: CommandMap): CommandMediator {
+        if (!this.config.isProduction() && commandMap !== undefined) {
+            return new CommandMediator(commandMap);
+        }
+
+        return new CommandMediator(this.makeProductionCommandMap());
     }
 
-    private makeApplicationCommandMap(): CommandMap {
-        const registerStudentCommand = this.makeRegisterStudentCommand();
-
-        return { [registerStudentCommand.key]: registerStudentCommand };
+    private makeProductionCommandMap(): CommandMap {
+        return {
+            'RegisterStudentCommand': this.makeRegisterStudentCommand.bind(this)
+        }
     }
 
     private makeCurrentUserRepository(): InMemoryCurrentUserRepository {

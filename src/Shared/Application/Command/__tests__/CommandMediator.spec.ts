@@ -11,7 +11,7 @@ describe('CommandMediator', function () {
             let handleCalled = false;
             const request: CommandRequest = { key };
             const command: CommandHandler<void> = { key, handle() { handleCalled = true; } };
-            const commandMap: CommandMap = { [key]: command };
+            const commandMap: CommandMap = { [key]: () => command };
             const router = new CommandMediator(commandMap);
 
             router.route(request);
@@ -23,7 +23,7 @@ describe('CommandMediator', function () {
             const key = 'test';
             const request: CommandRequest = { key };
             const command: CommandHandler<{ _testProperty: Number }> = { key, handle: () => ({ _testProperty: -123 }) };
-            const commandMap: CommandMap = { [key]: command };
+            const commandMap: CommandMap = { [key]: () => command };
             const router = new CommandMediator(commandMap);
 
             const response = router.route<{ _testProperty: Number }>(request);
