@@ -2,7 +2,7 @@ import { CommandHandler } from '../../../../Shared/Application/Command/CommandHa
 import { AuthenticateUserRequest } from './AuthenticateUserRequest';
 
 export class AuthenticateUserCommand implements CommandHandler<string> {
-    public readonly key = 'AuthenticateUserCommand';
+    public static readonly key = 'AuthenticateUserCommand';
     handle(request: AuthenticateUserRequest): string {
         return request.name;
     }

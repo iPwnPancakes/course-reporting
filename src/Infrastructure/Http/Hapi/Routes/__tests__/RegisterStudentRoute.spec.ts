@@ -18,7 +18,7 @@ describe('RegisterStudentRoute', function () {
         const email = 'Daniel@DanielBuenrrostro.com';
         const mockStudentCommand = mock<RegisterStudentCommand>()
         const compositionRoot = new CompositionRoot(new AppConfiguration());
-        const commandRouter = compositionRoot.makeCommandRouter({ 'RegisterStudentCommand': () => instance(mockStudentCommand) });
+        const commandRouter = compositionRoot.makeCommandRouter({ [RegisterStudentCommand.key]: () => instance(mockStudentCommand) });
         const app = compositionRoot.makeApplication(commandRouter);
         const controller = makeRegisterStudentRoute(app);
         const request = makeFakeHapiRequest();
