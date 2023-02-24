@@ -10,7 +10,7 @@ describe('CommandMediator', function () {
             const key = 'test';
             let handleCalled = false;
             const request: CommandRequest = { key };
-            const command: CommandHandler<void> = { key, handle() { handleCalled = true; } };
+            const command: CommandHandler<void> = { handle: () => { handleCalled = true; } };
             const commandMap: CommandMap = { [key]: () => command };
             const router = new CommandMediator(commandMap);
 
@@ -22,7 +22,7 @@ describe('CommandMediator', function () {
         it('should return whatever the command handler returns', () => {
             const key = 'test';
             const request: CommandRequest = { key };
-            const command: CommandHandler<{ _testProperty: Number }> = { key, handle: () => ({ _testProperty: -123 }) };
+            const command: CommandHandler<{ _testProperty: Number }> = { handle: () => ({ _testProperty: -123 }) };
             const commandMap: CommandMap = { [key]: () => command };
             const router = new CommandMediator(commandMap);
 
