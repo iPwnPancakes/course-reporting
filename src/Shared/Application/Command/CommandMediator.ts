@@ -7,7 +7,7 @@ export class CommandMediator {
 
     route<T>(request: CommandRequest): T {
         const commandFactory = this.commandMap[request.key];
-        const command: CommandHandler<any> = commandFactory();
+        const command: CommandHandler<T> = commandFactory();
 
         return command.handle(request);
     }
