@@ -41,7 +41,6 @@ export class CompositionRoot {
             this.app = new App(
                 this.makeCurrentUserRepository(),
                 this.makeStudentRepository(),
-                this.makeRegisterStudentCommand(),
                 commandRouter
             );
         }
