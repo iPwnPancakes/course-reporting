@@ -23,8 +23,11 @@ import { HapiHttpServer } from '../../../Infrastructure/Http/HapiHttpServer';
 import { makeHapiServer } from '../../../Infrastructure/Http/Hapi/makeHapiServer';
 import { StudentController } from '../../../Infrastructure/Http/Hapi/Routes/StudentController';
 import { App } from '../../../App';
-import { CommandMap } from "../Command/CommandMap";
-import { CommandMediator } from "../Command/CommandMediator";
+import { CommandMap } from '../Command/CommandMap';
+import { CommandMediator } from '../Command/CommandMediator';
+import {
+    GetAllRegisteredStudentsHandler
+} from '../../../Modules/Students/Commands/GetAllRegisteredStudents/GetAllRegisteredStudentsHandler';
 
 export class CompositionRoot {
     private app: App | null = null;
@@ -76,8 +79,9 @@ export class CompositionRoot {
 
     private makeProductionCommandMap(): CommandMap {
         return {
-            [RegisterStudentCommand.key]: this.makeRegisterStudentCommand.bind(this)
-        }
+            [RegisterStudentCommand.key]: this.makeRegisterStudentCommand.bind(this),
+            [GetAllRegisteredStudentsHandler.key]: this.makeGetAllRegisteredStudentsCommand.bind(this)
+        };
     }
 
     private makeCurrentUserRepository(): InMemoryCurrentUserRepository {
@@ -122,5 +126,9 @@ export class CompositionRoot {
 
     private makeApplicationConfiguration(): AppConfiguration {
         return new AppConfiguration();
+    }
+
+    private makeGetAllRegisteredStudentsCommand(): GetAllRegisteredStudentsHandler {
+        return new GetAllRegisteredStudentsHandler(this.makeStudentRepository());
     }
 }
