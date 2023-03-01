@@ -38,3 +38,12 @@ Then(/I should NOT see (.*) in the Student List/, async function (name: string) 
 
     expect(studentList).to.not.contain(map.get(name));
 });
+
+Then(/I should see (.*) in the registered Students list/, async function (name: string) {
+    const http: TestHttpClient = this.http;
+    const map: RandomValueMap = this.map;
+
+    const studentList = await http.get('/students');
+
+    expect(studentList).to.contain(map.get(name));
+});
