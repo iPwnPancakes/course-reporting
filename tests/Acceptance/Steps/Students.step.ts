@@ -43,7 +43,11 @@ Then(/I should see (.*) in the registered Students list/, async function (name: 
     const http: TestHttpClient = this.http;
     const map: RandomValueMap = this.map;
 
-    const studentList = await http.get('/students');
+    const response = await http.get('/students');
+    if(!response.ok) {
+        throw new Error(response.toString());
+    }
 
+    const studentList = response.value;
     expect(studentList).to.contain(map.get(name));
 });

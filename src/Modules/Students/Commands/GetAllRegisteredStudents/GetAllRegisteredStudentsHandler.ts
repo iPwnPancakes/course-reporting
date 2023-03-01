@@ -4,7 +4,9 @@ import { Student } from '../../Models/Student';
 import { IStudentRepository } from '../../Repositories/StudentRepository/IStudentRepository';
 import { GetAllRegisteredStudentsRequest } from './GetAllRegisteredStudentsRequest';
 
-export class GetAllRegisteredStudentsHandler implements CommandHandler<Promise<Result<Student[]>>> {
+export type GetAllRegisteredStudentsResponse = Promise<Result<Student[]>>;
+
+export class GetAllRegisteredStudentsHandler implements CommandHandler<GetAllRegisteredStudentsResponse> {
     public static key: string = 'GetAllRegisteredStudents';
 
     public constructor(private readonly studentRepo: IStudentRepository) {}

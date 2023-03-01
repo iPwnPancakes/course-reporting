@@ -2,6 +2,7 @@ import { IRouteController } from '../IRouteController';
 import { ServerRoute } from '@hapi/hapi';
 import { App } from '../../../../App';
 import { makeRegisterStudentRoute } from "./RegisterStudentRoute";
+import { makeGetAllStudentsRoute } from './makeGetAllStudentsRoute';
 
 export class StudentController implements IRouteController {
     private readonly prefix: string = '/students';
@@ -11,12 +12,8 @@ export class StudentController implements IRouteController {
 
     public getRoutes(): ServerRoute[] {
         return [
-            { method: 'GET', path: this.prefix + '', handler: this.handleRootPathRoute.bind(this) },
+            makeGetAllStudentsRoute(this.app),
             makeRegisterStudentRoute(this.app)
         ];
-    }
-
-    private handleRootPathRoute(): any {
-        return 'hello world';
     }
 }
