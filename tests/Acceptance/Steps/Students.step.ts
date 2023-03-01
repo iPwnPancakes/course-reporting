@@ -23,22 +23,6 @@ When(/I go to register a new Student named (.*) with email (.*)/, async function
     await http.post('/students/addStudent', { name: map.get(name), email: map.get(email) });
 });
 
-Then(/I should see (.*) in the Student List/, async function (name: string) {
-    const app: App = this.app;
-    const studentList = await app.listAllStudents();
-    const map: RandomValueMap = this.map;
-
-    expect(studentList).to.contain(map.get(name));
-});
-
-Then(/I should NOT see (.*) in the Student List/, async function (name: string) {
-    const app: App = this.app;
-    const studentList = await app.listAllStudents();
-    const map: RandomValueMap = this.map;
-
-    expect(studentList).to.not.contain(map.get(name));
-});
-
 Then(/I should see (.*) in the registered Students list/, async function (name: string) {
     const http: TestHttpClient = this.http;
     const map: RandomValueMap = this.map;
