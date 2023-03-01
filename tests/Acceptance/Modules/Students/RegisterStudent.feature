@@ -13,7 +13,7 @@ Feature: Register Student
     Scenario Outline: Teacher needs to specify a valid name
         Given I am a Teacher
         When I go to register a new Student named <name> with email <email>
-        Then I should NOT see <name> in the Student List
+        Then I should NOT see <name> in the registered Students list
 
         Examples:
             | name   | email       |
@@ -23,7 +23,7 @@ Feature: Register Student
     Scenario Outline: Teacher gives invalid email
         Given I am a Teacher
         When I go to register a new Student named <name> with email <email>
-        Then I should NOT see <name> in the Student List
+        Then I should NOT see <name> in the registered Students list
 
         Examples:
             | name  | email |

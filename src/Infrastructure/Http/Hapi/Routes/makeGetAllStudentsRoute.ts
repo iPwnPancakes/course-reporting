@@ -25,7 +25,9 @@ export function makeGetAllStudentsRoute(app: App): ServerRoute {
                 return h.response(response.error.message).code(500);
             }
 
-            return h.response(response.value).code(200);
+            const students = response.value;
+            const responseViewModel = students.map(student => ({ name: student.getName(), email: student.getEmail() }));
+            return h.response(responseViewModel).code(200);
         }
     };
 }

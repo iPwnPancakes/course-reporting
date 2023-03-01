@@ -44,10 +44,25 @@ Then(/I should see (.*) in the registered Students list/, async function (name: 
     const map: RandomValueMap = this.map;
 
     const response = await http.get('/students');
-    if(!response.ok) {
+    if (!response.ok) {
         throw new Error(response.toString());
     }
 
-    const studentList = response.value;
-    expect(studentList).to.contain(map.get(name));
+    const studentList = JSON.parse(response.value);
+    const names: string[] = studentList.map(student => student.name);
+    expect(names).to.contain(map.get(name));
+});
+
+Then(/I should NOT see (.*) in the registered Students list/, async function (name: string) {
+    const http: TestHttpClient = this.http;
+    const map: RandomValueMap = this.map;
+
+    const response = await http.get('/students');
+    if (!response.ok) {
+        throw new Error(response.toString());
+    }
+
+    const studentList = JSON.parse(response.value);
+    const names: string[] = studentList.map(student => student.name);
+    expect(names).to.not.contain(map.get(name));
 });
