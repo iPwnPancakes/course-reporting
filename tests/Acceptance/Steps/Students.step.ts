@@ -1,13 +1,8 @@
-import { Given, Then, When } from '@cucumber/cucumber';
+import { Then, When } from '@cucumber/cucumber';
 import { expect } from 'chai';
 import { App } from '../../../src/App';
 import { RandomValueMap } from '../TestInfrastructure/RandomValueMap';
 import { TestHttpClient } from '../TestInfrastructure/TestHttpClient';
-
-Given('I am a Teacher', function () {
-    const app: App = this.app;
-    app.login('');
-});
 
 When(/I go to register a new Student named (.*) with email (.*)/, async function (name: string, email: string) {
     const map: RandomValueMap = this.map;
