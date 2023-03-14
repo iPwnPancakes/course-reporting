@@ -47,16 +47,11 @@ describe('CommandMediator', function () {
     });
 
     describe('Middleware functionality', function () {
-        it('should run middleware', () => {
+        it('should run middleware', async () => {
             let wasMiddlewareCalled = false;
             const key = 'test';
             const request: CommandRequest = { key };
-            const passthroughMiddleware: Middleware = {
-                handle(request: CommandRequest, next ?: Middleware) {
-                    wasMiddlewareCalled = true;
-                    return true;
-                }
-            };
+            const passthroughMiddleware: Middleware = createSuccessMiddleware(() => { wasMiddlewareCalled = true; });
             const command: CommandHandler<{ _testProperty: Number }> = {
                 handle: async () => ({ ok: true, value: { _testProperty: -123 } })
             };
@@ -68,16 +63,16 @@ describe('CommandMediator', function () {
             };
             const router = new CommandMediator(commandMap);
 
-            router.route(request);
+            await router.route(request);
 
             expect(wasMiddlewareCalled).to.be.true;
         });
 
-        it('should call handler if all middleware passes', () => {
+        it('should call handler if all middleware passes', async () => {
             let wasHandlerCalled = false;
             const key = 'test';
             const request: CommandRequest = { key };
-            const passthroughMiddleware: Middleware = { handle: (request: CommandRequest, next ?: Middleware) => true };
+            const passthroughMiddleware: Middleware = createSuccessMiddleware();
             const command: CommandHandler<void> = {
                 handle: async () => {
                     wasHandlerCalled = true;
@@ -92,17 +87,17 @@ describe('CommandMediator', function () {
             };
             const router = new CommandMediator(commandMap);
 
-            router.route(request);
+            await router.route(request);
 
             expect(wasHandlerCalled).to.be.true;
         });
 
-        it('should not call command if not all middleware passes', () => {
+        it('should not call command if not all middleware passes', async () => {
             let wasHandlerCalled = false;
             const key = 'test';
             const request: CommandRequest = { key };
-            const passthroughMiddleware: Middleware = { handle: (request: CommandRequest, next ?: Middleware) => true };
-            const failMiddleware: Middleware = { handle: (request: CommandRequest, next?: Middleware) => false };
+            const passthroughMiddleware: Middleware = createSuccessMiddleware();
+            const failMiddleware: Middleware = createFailingMiddleware();
             const command: CommandHandler<void> = {
                 handle: async () => {
                     wasHandlerCalled = true;
@@ -117,9 +112,41 @@ describe('CommandMediator', function () {
             };
             const router = new CommandMediator(commandMap);
 
-            router.route(request);
+            await router.route(request);
 
             expect(wasHandlerCalled).to.be.false;
         });
     });
 });
+
+function createSuccessMiddleware(callback?: Function): Middleware {
+    let nextMiddleware: Middleware = null;
+    return {
+        next: null,
+        handle: async (request: CommandRequest) => {
+            if (callback) {
+                callback();
+            }
+
+            if (!nextMiddleware) {
+                return { ok: true, value: null };
+            }
+
+            return nextMiddleware.handle(request);
+        },
+        setNext(middleware: Middleware) {
+            nextMiddleware = middleware;
+        }
+    };
+}
+
+function createFailingMiddleware(): Middleware {
+    return {
+        next: null,
+        handle: async (request: CommandRequest) => ({
+            ok: false,
+            error: new Error('Expected failure')
+        }),
+        setNext(middleware: Middleware) {}
+    };
+}

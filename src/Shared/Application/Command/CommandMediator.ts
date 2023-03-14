@@ -11,12 +11,11 @@ export class CommandMediator {
         const commandEntry = this.commandMap[request.key];
 
         if (commandEntry.middleware) {
-            for (let i = 0; i < commandEntry.middleware.length; i++) {
-                const middleware: Middleware = commandEntry.middleware[i];
-                const goToNext = middleware.handle(request);
-                if (!goToNext) {
-                    return { ok: false, error: new Error('Middleware failed') };
-                }
+            const middlewareChain = this.chainMiddleware(commandEntry.middleware);
+
+            const response = await middlewareChain.handle<T>(request);
+            if (response.ok === false) {
+                return response;
             }
         }
 
@@ -24,5 +23,26 @@ export class CommandMediator {
         const command: CommandHandler<T> = commandFactory();
 
         return await command.handle(request);
+    }
+
+    private chainMiddleware(middleware: Middleware[]): Middleware {
+        if (middleware.length === 0) {
+            throw new Error('Cannot create Middleware chain from empty array');
+        }
+
+        let head: Middleware = null;
+        let prevMiddleware: Middleware = null;
+
+        for (let i = 0; i < middleware.length; i++) {
+            if (i === 0) {
+                head = middleware[i];
+                prevMiddleware = middleware[i];
+            } else {
+                prevMiddleware.setNext(middleware[i]);
+                prevMiddleware = middleware[i];
+            }
+        }
+
+        return head;
     }
 }

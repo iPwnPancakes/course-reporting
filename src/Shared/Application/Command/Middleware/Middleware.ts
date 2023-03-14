@@ -1,5 +1,10 @@
 import { CommandRequest } from '../CommandRequest';
+import { Result } from '../../Result/Result';
 
 export interface Middleware {
-    handle(request: CommandRequest, next?: Middleware): boolean;
+    next: Middleware;
+
+    handle<T>(request: CommandRequest): Promise<Result<T>>;
+
+    setNext(middleware: Middleware): void;
 }
