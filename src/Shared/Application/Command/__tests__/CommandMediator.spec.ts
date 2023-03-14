@@ -1,8 +1,8 @@
-import { CommandMediator } from "../CommandMediator";
-import { CommandHandler } from "../CommandHandler";
-import { CommandRequest } from "../CommandRequest";
-import { expect } from "chai";
-import { CommandMap } from "../CommandMap";
+import { CommandMediator } from '../CommandMediator';
+import { CommandHandler } from '../CommandHandler';
+import { CommandRequest } from '../CommandRequest';
+import { expect } from 'chai';
+import { CommandMap } from '../CommandMap';
 
 describe('CommandMediator', function () {
     describe('route', function () {
@@ -11,7 +11,7 @@ describe('CommandMediator', function () {
             let handleCalled = false;
             const request: CommandRequest = { key };
             const command: CommandHandler<void> = { handle: () => { handleCalled = true; } };
-            const commandMap: CommandMap = { [key]: () => command };
+            const commandMap: CommandMap = { [key]: { handler: () => command } };
             const router = new CommandMediator(commandMap);
 
             router.route(request);
@@ -23,12 +23,12 @@ describe('CommandMediator', function () {
             const key = 'test';
             const request: CommandRequest = { key };
             const command: CommandHandler<{ _testProperty: Number }> = { handle: () => ({ _testProperty: -123 }) };
-            const commandMap: CommandMap = { [key]: () => command };
+            const commandMap: CommandMap = { [key]: { handler: () => command } };
             const router = new CommandMediator(commandMap);
 
             const response = router.route<{ _testProperty: Number }>(request);
 
             expect(response._testProperty).to.equal(-123);
-        })
+        });
     });
 });

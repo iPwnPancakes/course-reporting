@@ -6,7 +6,7 @@ export class CommandMediator {
     constructor(private readonly commandMap: CommandMap) {}
 
     route<T>(request: CommandRequest): T {
-        const commandFactory = this.commandMap[request.key];
+        const commandFactory = this.commandMap[request.key].handler;
         const command: CommandHandler<T> = commandFactory();
 
         return command.handle(request);

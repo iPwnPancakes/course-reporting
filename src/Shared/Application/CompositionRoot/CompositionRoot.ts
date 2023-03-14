@@ -79,8 +79,8 @@ export class CompositionRoot {
 
     private makeProductionCommandMap(): CommandMap {
         return {
-            [RegisterStudentCommand.key]: this.makeRegisterStudentCommand.bind(this),
-            [GetAllRegisteredStudentsHandler.key]: this.makeGetAllRegisteredStudentsCommand.bind(this)
+            [RegisterStudentCommand.key]: { handler: this.makeRegisterStudentCommand.bind(this) },
+            [GetAllRegisteredStudentsHandler.key]: { handler: this.makeGetAllRegisteredStudentsCommand.bind(this) }
         };
     }
 
