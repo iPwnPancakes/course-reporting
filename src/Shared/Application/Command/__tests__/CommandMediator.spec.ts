@@ -61,5 +61,24 @@ describe('CommandMediator', function () {
 
             expect(wasMiddlewareCalled).to.be.true;
         });
+
+        it('should call handler if all middleware passes', () => {
+            let wasHandlerCalled = false;
+            const key = 'test';
+            const request: CommandRequest = { key };
+            const passthroughMiddleware: Middleware = { handle: (request: CommandRequest, next ?: Middleware) => true };
+            const command: CommandHandler<void> = { handle: () => { wasHandlerCalled = true; } };
+            const commandMap: CommandMap = {
+                [key]: {
+                    handler: () => command,
+                    middleware: [passthroughMiddleware]
+                }
+            };
+            const router = new CommandMediator(commandMap);
+
+            router.route(request);
+
+            expect(wasHandlerCalled).to.be.true;
+        });
     });
 });
