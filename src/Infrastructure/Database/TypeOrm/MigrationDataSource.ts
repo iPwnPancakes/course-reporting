@@ -11,6 +11,6 @@ export const MigrationDataSource = new DataSource({
     database: process.env.DB_DATABASE,
     entities: [StudentEntity],
     connectorPackage: 'mysql2' as 'mysql' | 'mysql2',
-    migrations: ['src/Infrastructure/DatabaseConnection/TypeOrm/Migrations/*.ts'],
+    migrations: ['src/Infrastructure/Database/TypeOrm/Migrations/*.ts'],
     synchronize: false
 });

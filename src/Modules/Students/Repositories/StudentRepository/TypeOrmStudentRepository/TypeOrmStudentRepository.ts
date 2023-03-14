@@ -1,7 +1,7 @@
 import { IStudentRepository } from '../IStudentRepository';
 import { Student } from '../../../Models/Student';
 import { DataSource } from 'typeorm';
-import { StudentEntity } from '../../../../../Infrastructure/DatabaseConnection/TypeOrm/Entities/StudentEntity';
+import { StudentEntity } from '../../../../../Infrastructure/Database/TypeOrm/Entities/StudentEntity';
 
 export class TypeOrmStudentRepository implements IStudentRepository {
     constructor(private readonly dataSource: DataSource) {

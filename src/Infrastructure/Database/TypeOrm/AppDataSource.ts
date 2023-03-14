@@ -13,7 +13,7 @@ export function makeDataSource(config: DatabaseConfiguration): DataSource {
         database,
         connectorPackage: 'mysql2',
         entities: [StudentEntity],
-        migrations: ['src/Infrastructure/DatabaseConnection/TypeOrm/Migrations/*.ts'],
+        migrations: ['src/Infrastructure/Database/TypeOrm/Migrations/*.ts'],
         synchronize: false
     });
 }

@@ -6,7 +6,7 @@ import { IStudentRepository } from '../../../Modules/Students/Repositories/Stude
 import { IEmailService } from '../../../Modules/Email/Contracts/IEmailService';
 import { StubbedEmailService } from '../../../Modules/Email/Services/StubbedEmailService';
 import { DataSource } from 'typeorm';
-import { makeDataSource } from '../../../Infrastructure/DatabaseConnection/TypeOrm/AppDataSource';
+import { makeDataSource } from '../../../Infrastructure/Database/TypeOrm/AppDataSource';
 import { AppConfiguration } from '../Configuration/AppConfiguration';
 import {
     TypeOrmStudentRepository
@@ -14,9 +14,9 @@ import {
 import {
     InMemoryStudentRepository
 } from '../../../Modules/Students/Repositories/StudentRepository/InMemoryStudentRepository/InMemoryStudentRepository';
-import { IDatabaseConnection } from '../../../Infrastructure/DatabaseConnection/IDatabaseConnection';
-import { TypeOrmDatabaseConnection } from '../../../Infrastructure/DatabaseConnection/TypeOrmDatabaseConnection';
-import { StubbedDatabaseConnection } from '../../../Infrastructure/DatabaseConnection/StubbedDatabaseConnection';
+import { IDatabaseConnection } from '../../../Infrastructure/Database/IDatabaseConnection';
+import { TypeOrmDatabaseConnection } from '../../../Infrastructure/Database/TypeOrmDatabaseConnection';
+import { StubbedDatabaseConnection } from '../../../Infrastructure/Database/StubbedDatabaseConnection';
 import { IHttpServer } from '../../../Infrastructure/Http/IHttpServer';
 import { StubbedHttpServer } from '../../../Infrastructure/Http/StubbedHttpServer';
 import { HapiHttpServer } from '../../../Infrastructure/Http/HapiHttpServer';

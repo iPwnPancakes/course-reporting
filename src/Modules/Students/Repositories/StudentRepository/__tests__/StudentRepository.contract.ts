@@ -7,7 +7,7 @@ import { IStudentRepository } from '../IStudentRepository';
 import { faker } from '@faker-js/faker';
 import { DataSource } from 'typeorm';
 import { AppConfiguration } from '../../../../../Shared/Application/Configuration/AppConfiguration';
-import { makeDataSource } from '../../../../../Infrastructure/DatabaseConnection/TypeOrm/AppDataSource';
+import { makeDataSource } from '../../../../../Infrastructure/Database/TypeOrm/AppDataSource';
 
 describe('StudentRepository contract tests', function () {
     let userRepositories: IStudentRepository[];

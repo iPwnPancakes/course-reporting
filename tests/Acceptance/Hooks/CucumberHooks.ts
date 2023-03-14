@@ -3,7 +3,7 @@ import { CompositionRoot } from '../../../src/Shared/Application/CompositionRoot
 import { RandomValueMap } from '../TestInfrastructure/RandomValueMap';
 import { AppConfiguration } from '../../../src/Shared/Application/Configuration/AppConfiguration';
 import { IHttpServer } from '../../../src/Infrastructure/Http/IHttpServer';
-import { IDatabaseConnection } from '../../../src/Infrastructure/DatabaseConnection/IDatabaseConnection';
+import { IDatabaseConnection } from '../../../src/Infrastructure/Database/IDatabaseConnection';
 import { TestHttpClient } from '../TestInfrastructure/TestHttpClient';
 
 Before(async function () {
