@@ -1,8 +1,8 @@
 import { InMemoryCurrentUserRepository } from './Modules/Authentication/Repositories/InMemoryCurrentUserRepository';
 import { IStudentRepository } from './Modules/Students/Repositories/StudentRepository/IStudentRepository';
 import { Student } from './Modules/Students/Models/Student';
-import { CommandMediator } from "./Shared/Application/Command/CommandMediator";
-import { CommandRequest } from "./Shared/Application/Command/CommandRequest";
+import { CommandMediator } from './Shared/Application/Command/CommandMediator';
+import { CommandRequest } from './Shared/Application/Command/CommandRequest';
 import { Result } from './Shared/Application/Result/Result';
 
 export class App {
@@ -13,14 +13,8 @@ export class App {
     ) {
     }
 
-    public route<T>(request: CommandRequest): T {
-        const routeResponse = this.commandRouter.route<T>(request);
-
-        if(routeResponse.ok) {
-            return routeResponse.value;
-        } else {
-            throw new Error('Could not process request');
-        }
+    public async route<T>(request: CommandRequest): Promise<Result<T>> {
+        return await this.commandRouter.route<T>(request);
     }
 
     login(username: string) {

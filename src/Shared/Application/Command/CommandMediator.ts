@@ -7,7 +7,7 @@ import { Result } from '../Result/Result';
 export class CommandMediator {
     constructor(private readonly commandMap: CommandMap) {}
 
-    route<T>(request: CommandRequest): Result<T> {
+    async route<T>(request: CommandRequest): Promise<Result<T>> {
         const commandEntry = this.commandMap[request.key];
 
         if (commandEntry.middleware) {
@@ -23,6 +23,6 @@ export class CommandMediator {
         const commandFactory = this.commandMap[request.key].handler;
         const command: CommandHandler<T> = commandFactory();
 
-        return { ok: true, value: command.handle(request) };
+        return await command.handle(request);
     }
 }

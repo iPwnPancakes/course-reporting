@@ -1,5 +1,6 @@
-import { CommandRequest } from "./CommandRequest";
+import { CommandRequest } from './CommandRequest';
+import { Result } from '../Result/Result';
 
 export interface CommandHandler<T> {
-    handle(request: CommandRequest): T;
+    handle(request: CommandRequest): Promise<Result<T>>;
 }

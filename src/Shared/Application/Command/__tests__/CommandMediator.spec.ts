@@ -4,30 +4,39 @@ import { CommandRequest } from '../CommandRequest';
 import { expect } from 'chai';
 import { CommandMap } from '../CommandMap';
 import { Middleware } from '../Middleware/Middleware';
+import { Result } from '../../Result/Result';
 
 describe('CommandMediator', function () {
     describe('route', function () {
-        it('should route request to command with matching key', () => {
+        it('should route request to command with matching key', async () => {
             const key = 'test';
             let handleCalled = false;
             const request: CommandRequest = { key };
-            const command: CommandHandler<void> = { handle: () => { handleCalled = true; } };
+            const command: CommandHandler<Promise<Result<void>>> = {
+                handle: async () => {
+                    handleCalled = true;
+
+                    return { ok: true, value: null };
+                }
+            };
             const commandMap: CommandMap = { [key]: { handler: () => command } };
             const router = new CommandMediator(commandMap);
 
-            router.route(request);
+            await router.route(request);
 
             expect(handleCalled).to.be.true;
         });
 
-        it('should return whatever the command handler returns', () => {
+        it('should return whatever the command handler returns', async () => {
             const key = 'test';
             const request: CommandRequest = { key };
-            const command: CommandHandler<{ _testProperty: Number }> = { handle: () => ({ _testProperty: -123 }) };
+            const command: CommandHandler<{ _testProperty: Number }> = {
+                handle: async () => ({ ok: true, value: { _testProperty: -123 } })
+            };
             const commandMap: CommandMap = { [key]: { handler: () => command } };
             const router = new CommandMediator(commandMap);
 
-            const response = router.route<{ _testProperty: Number }>(request);
+            const response = await router.route<{ _testProperty: Number }>(request);
 
             if (response.ok) {
                 expect(response.value._testProperty).to.equal(-123);
@@ -48,7 +57,9 @@ describe('CommandMediator', function () {
                     return true;
                 }
             };
-            const command: CommandHandler<{ _testProperty: Number }> = { handle: () => ({ _testProperty: -123 }) };
+            const command: CommandHandler<{ _testProperty: Number }> = {
+                handle: async () => ({ ok: true, value: { _testProperty: -123 } })
+            };
             const commandMap: CommandMap = {
                 [key]: {
                     handler: () => command,
@@ -67,7 +78,12 @@ describe('CommandMediator', function () {
             const key = 'test';
             const request: CommandRequest = { key };
             const passthroughMiddleware: Middleware = { handle: (request: CommandRequest, next ?: Middleware) => true };
-            const command: CommandHandler<void> = { handle: () => { wasHandlerCalled = true; } };
+            const command: CommandHandler<void> = {
+                handle: async () => {
+                    wasHandlerCalled = true;
+                    return { ok: true, value: null };
+                }
+            };
             const commandMap: CommandMap = {
                 [key]: {
                     handler: () => command,
@@ -87,7 +103,12 @@ describe('CommandMediator', function () {
             const request: CommandRequest = { key };
             const passthroughMiddleware: Middleware = { handle: (request: CommandRequest, next ?: Middleware) => true };
             const failMiddleware: Middleware = { handle: (request: CommandRequest, next?: Middleware) => false };
-            const command: CommandHandler<void> = { handle: () => { wasHandlerCalled = true; } };
+            const command: CommandHandler<void> = {
+                handle: async () => {
+                    wasHandlerCalled = true;
+                    return { ok: true, value: null };
+                }
+            };
             const commandMap: CommandMap = {
                 [key]: {
                     handler: () => command,

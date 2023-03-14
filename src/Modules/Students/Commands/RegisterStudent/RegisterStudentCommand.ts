@@ -8,7 +8,7 @@ import { IEmailService } from '../../../Email/Contracts/IEmailService';
 
 export type RegisterStudentResponse = Promise<Result<Student, Error>>;
 
-export class RegisterStudentCommand implements CommandHandler<RegisterStudentResponse> {
+export class RegisterStudentCommand implements CommandHandler<Student> {
     public static readonly key = 'RegisterStudentCommand';
 
     constructor(private readonly studentRepo: IStudentRepository, private readonly emailService: IEmailService) {
