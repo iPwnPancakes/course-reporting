@@ -3,6 +3,7 @@ import { CommandRequest } from './CommandRequest';
 import { Middleware } from './Middleware/Middleware';
 import { Result } from '../Result/Result';
 import { ViewBag } from '../ViewBag/ViewBag';
+import { CommandHandler } from './CommandHandler';
 
 export class CommandMediator {
     constructor(private readonly commandMap: CommandMap) {}
@@ -11,18 +12,14 @@ export class CommandMediator {
         const commandEntry = this.commandMap[request.key];
 
         if (commandEntry.middleware) {
-            const middlewareChain = this.chainMiddleware(commandEntry.middleware);
-
-            const response = await middlewareChain.handle(request);
-            if (response.ok === false) {
-                return response;
-            }
+            const middlewareChain = this.chainMiddleware(commandEntry.middleware, commandEntry.handler);
+            return await middlewareChain.handle(request);
         }
 
         return await commandEntry.handler.handle(request);
     }
 
-    private chainMiddleware(middleware: Middleware[]): Middleware {
+    private chainMiddleware(middleware: Middleware[], command: CommandHandler): Middleware {
         if (middleware.length === 0) {
             throw new Error('Cannot create Middleware chain from empty array');
         }
@@ -38,6 +35,12 @@ export class CommandMediator {
                 prevMiddleware.setNext(middleware[i]);
                 prevMiddleware = middleware[i];
             }
+        }
+
+        if (prevMiddleware) {
+            prevMiddleware.setNext(command);
+        } else {
+            head.setNext(command);
         }
 
         return head;
