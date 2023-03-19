@@ -19,7 +19,7 @@ describe('CommandMediator', function () {
                     return { ok: true, value: null };
                 }
             };
-            const commandMap: CommandMap = { [key]: { handler: () => command } };
+            const commandMap: CommandMap = { [key]: { handler: command } };
             const router = new CommandMediator(commandMap);
 
             await router.route(request);
@@ -33,7 +33,7 @@ describe('CommandMediator', function () {
             const command: CommandHandler = {
                 handle: async () => ({ ok: true, value: new ViewBag({ _testProperty: -123 }) })
             };
-            const commandMap: CommandMap = { [key]: { handler: () => command } };
+            const commandMap: CommandMap = { [key]: { handler: command } };
             const router = new CommandMediator(commandMap);
 
             const response = await router.route(request);
@@ -57,7 +57,7 @@ describe('CommandMediator', function () {
             };
             const commandMap: CommandMap = {
                 [key]: {
-                    handler: () => command,
+                    handler: command,
                     middleware: [passthroughMiddleware]
                 }
             };
@@ -81,7 +81,7 @@ describe('CommandMediator', function () {
             };
             const commandMap: CommandMap = {
                 [key]: {
-                    handler: () => command,
+                    handler: command,
                     middleware: [passthroughMiddleware]
                 }
             };
@@ -106,7 +106,7 @@ describe('CommandMediator', function () {
             };
             const commandMap: CommandMap = {
                 [key]: {
-                    handler: () => command,
+                    handler: command,
                     middleware: [passthroughMiddleware, failMiddleware]
                 }
             };

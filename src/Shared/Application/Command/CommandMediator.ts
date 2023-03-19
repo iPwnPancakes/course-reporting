@@ -1,6 +1,5 @@
 import { CommandMap } from './CommandMap';
 import { CommandRequest } from './CommandRequest';
-import { CommandHandler } from './CommandHandler';
 import { Middleware } from './Middleware/Middleware';
 import { Result } from '../Result/Result';
 import { ViewBag } from '../ViewBag/ViewBag';
@@ -20,10 +19,7 @@ export class CommandMediator {
             }
         }
 
-        const commandFactory = this.commandMap[request.key].handler;
-        const command: CommandHandler = commandFactory();
-
-        return await command.handle(request);
+        return await commandEntry.handler.handle(request);
     }
 
     private chainMiddleware(middleware: Middleware[]): Middleware {

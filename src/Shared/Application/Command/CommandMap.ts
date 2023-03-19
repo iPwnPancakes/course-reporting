@@ -1,7 +1,8 @@
 import { Middleware } from './Middleware/Middleware';
+import { CommandHandler } from './CommandHandler';
 
 export interface ICommandMapEntry {
-    handler: Function,
+    handler: CommandHandler,
     middleware?: Middleware[]
 }
 

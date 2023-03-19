@@ -79,8 +79,8 @@ export class CompositionRoot {
 
     private makeProductionCommandMap(): CommandMap {
         return {
-            [RegisterStudentCommand.key]: { handler: this.makeRegisterStudentCommand.bind(this) },
-            [GetAllRegisteredStudentsHandler.key]: { handler: this.makeGetAllRegisteredStudentsCommand.bind(this) }
+            [RegisterStudentCommand.key]: { handler: this.makeRegisterStudentCommand() },
+            [GetAllRegisteredStudentsHandler.key]: { handler: this.makeGetAllRegisteredStudentsCommand() }
         };
     }
 
@@ -88,7 +88,7 @@ export class CompositionRoot {
         return new InMemoryCurrentUserRepository();
     }
 
-    private makeRegisterStudentCommand() {
+    private makeRegisterStudentCommand(): RegisterStudentCommand {
         return new RegisterStudentCommand(this.makeStudentRepository(), this.makeEmailService());
     }
 

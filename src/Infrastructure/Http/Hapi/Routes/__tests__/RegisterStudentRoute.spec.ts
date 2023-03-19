@@ -19,7 +19,7 @@ describe('RegisterStudentRoute', function () {
         const mockStudentCommand = mock<RegisterStudentCommand>();
         const compositionRoot = new CompositionRoot(new AppConfiguration());
         const commandRouter = compositionRoot.makeCommandRouter({
-            [RegisterStudentCommand.key]: { handler: () => instance(mockStudentCommand) }
+            [RegisterStudentCommand.key]: { handler: instance(mockStudentCommand) }
         });
         const app = compositionRoot.makeApplication(commandRouter);
         const controller = makeRegisterStudentRoute(app);
