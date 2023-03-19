@@ -25,23 +25,19 @@ export class CommandMediator {
         }
 
         let head: Middleware = null;
-        let prevMiddleware: Middleware = null;
+        let tail: Middleware = null;
 
         for (let i = 0; i < middleware.length; i++) {
             if (i === 0) {
                 head = middleware[i];
-                prevMiddleware = middleware[i];
+                tail = middleware[i];
             } else {
-                prevMiddleware.setNext(middleware[i]);
-                prevMiddleware = middleware[i];
+                tail.setNext(middleware[i]);
+                tail = middleware[i];
             }
         }
 
-        if (prevMiddleware) {
-            prevMiddleware.setNext(command);
-        } else {
-            head.setNext(command);
-        }
+        tail.setNext(command);
 
         return head;
     }
