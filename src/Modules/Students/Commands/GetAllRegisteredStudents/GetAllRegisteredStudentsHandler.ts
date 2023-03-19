@@ -1,19 +1,20 @@
 import { CommandHandler } from '../../../../Shared/Application/Command/CommandHandler';
 import { Result } from '../../../../Shared/Application/Result/Result';
-import { Student } from '../../Models/Student';
 import { IStudentRepository } from '../../Repositories/StudentRepository/IStudentRepository';
 import { GetAllRegisteredStudentsRequest } from './GetAllRegisteredStudentsRequest';
+import { ViewBag } from '../../../../Shared/Application/ViewBag/ViewBag';
 
-export type GetAllRegisteredStudentsResponse = Student[];
-
-export class GetAllRegisteredStudentsHandler implements CommandHandler<GetAllRegisteredStudentsResponse> {
+export class GetAllRegisteredStudentsHandler implements CommandHandler {
     public static key: string = 'GetAllRegisteredStudents';
 
     public constructor(private readonly studentRepo: IStudentRepository) {}
 
-    async handle(request: GetAllRegisteredStudentsRequest): Promise<Result<GetAllRegisteredStudentsResponse>> {
+    async handle(request: GetAllRegisteredStudentsRequest): Promise<Result<ViewBag>> {
         try {
-            return { ok: true, value: await this.studentRepo.getAllStudents() };
+            return {
+                ok: true,
+                value: new ViewBag({ students: await this.studentRepo.getAllStudents() })
+            };
         } catch (e: unknown) {
             return {
                 ok: false,

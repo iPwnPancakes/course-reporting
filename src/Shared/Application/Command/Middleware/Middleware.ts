@@ -1,10 +1,11 @@
 import { CommandRequest } from '../CommandRequest';
 import { Result } from '../../Result/Result';
+import { ViewBag } from '../../ViewBag/ViewBag';
 
 export interface Middleware {
     next: Middleware;
 
-    handle<T>(request: CommandRequest): Promise<Result<T>>;
+    handle(request: CommandRequest): Promise<Result<ViewBag>>;
 
     setNext(middleware: Middleware): void;
 }

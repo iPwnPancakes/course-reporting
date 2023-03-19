@@ -4,6 +4,7 @@ import { Student } from './Modules/Students/Models/Student';
 import { CommandMediator } from './Shared/Application/Command/CommandMediator';
 import { CommandRequest } from './Shared/Application/Command/CommandRequest';
 import { Result } from './Shared/Application/Result/Result';
+import { ViewBag } from './Shared/Application/ViewBag/ViewBag';
 
 export class App {
     constructor(
@@ -13,8 +14,8 @@ export class App {
     ) {
     }
 
-    public async route<T>(request: CommandRequest): Promise<Result<T>> {
-        return await this.commandRouter.route<T>(request);
+    public async route(request: CommandRequest): Promise<Result<ViewBag>> {
+        return await this.commandRouter.route(request);
     }
 
     login(username: string) {

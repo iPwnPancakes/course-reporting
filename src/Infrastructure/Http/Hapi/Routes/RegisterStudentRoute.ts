@@ -1,6 +1,5 @@
 import { Request, ResponseToolkit, ServerRoute } from "@hapi/hapi";
 import { RegisterStudentRequest } from "../../../../Modules/Students/Commands/RegisterStudent/RegisterStudentRequest";
-import { RegisterStudentResponse } from "../../../../Modules/Students/Commands/RegisterStudent/RegisterStudentCommand";
 import { ApplicationError } from "../../../../Shared/Application/Errors/ApplicationError";
 import { App } from "../../../../App";
 
@@ -15,7 +14,7 @@ export function makeRegisterStudentRoute(app: App): ServerRoute {
             }
 
             const createStudentRequest = new RegisterStudentRequest(String(name), String(email));
-            const response = await app.route<RegisterStudentResponse>(createStudentRequest);
+            const response = await app.route(createStudentRequest);
 
             if (response.ok === false) {
                 const error = response.error;

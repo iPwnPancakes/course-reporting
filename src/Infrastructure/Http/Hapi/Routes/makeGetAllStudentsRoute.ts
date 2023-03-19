@@ -4,9 +4,7 @@ import { ApplicationError } from '../../../../Shared/Application/Errors/Applicat
 import {
     GetAllRegisteredStudentsRequest
 } from '../../../../Modules/Students/Commands/GetAllRegisteredStudents/GetAllRegisteredStudentsRequest';
-import {
-    GetAllRegisteredStudentsResponse
-} from '../../../../Modules/Students/Commands/GetAllRegisteredStudents/GetAllRegisteredStudentsHandler';
+import { Student } from '../../../../Modules/Students/Models/Student';
 
 export function makeGetAllStudentsRoute(app: App): ServerRoute {
     return {
@@ -14,7 +12,7 @@ export function makeGetAllStudentsRoute(app: App): ServerRoute {
         method: 'GET',
         handler: async (req: Request<any>, h: ResponseToolkit): Promise<any> => {
             const getAllStudentsRequest = new GetAllRegisteredStudentsRequest();
-            const response = await app.route<GetAllRegisteredStudentsResponse>(getAllStudentsRequest);
+            const response = await app.route(getAllStudentsRequest);
 
             if (response.ok === false) {
                 const error = response.error;
@@ -25,7 +23,7 @@ export function makeGetAllStudentsRoute(app: App): ServerRoute {
                 return h.response(response.error.message).code(500);
             }
 
-            const students = response.value;
+            const students = response.value.get<Student[]>('students');
             const responseViewModel = students.map(student => ({ name: student.getName(), email: student.getEmail() }));
             return h.response(responseViewModel).code(200);
         }

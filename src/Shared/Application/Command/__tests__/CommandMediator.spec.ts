@@ -4,7 +4,7 @@ import { CommandRequest } from '../CommandRequest';
 import { expect } from 'chai';
 import { CommandMap } from '../CommandMap';
 import { Middleware } from '../Middleware/Middleware';
-import { Result } from '../../Result/Result';
+import { ViewBag } from '../../ViewBag/ViewBag';
 
 describe('CommandMediator', function () {
     describe('route', function () {
@@ -12,7 +12,7 @@ describe('CommandMediator', function () {
             const key = 'test';
             let handleCalled = false;
             const request: CommandRequest = { key };
-            const command: CommandHandler<Promise<Result<void>>> = {
+            const command: CommandHandler = {
                 handle: async () => {
                     handleCalled = true;
 
@@ -30,16 +30,16 @@ describe('CommandMediator', function () {
         it('should return whatever the command handler returns', async () => {
             const key = 'test';
             const request: CommandRequest = { key };
-            const command: CommandHandler<{ _testProperty: Number }> = {
-                handle: async () => ({ ok: true, value: { _testProperty: -123 } })
+            const command: CommandHandler = {
+                handle: async () => ({ ok: true, value: new ViewBag({ _testProperty: -123 }) })
             };
             const commandMap: CommandMap = { [key]: { handler: () => command } };
             const router = new CommandMediator(commandMap);
 
-            const response = await router.route<{ _testProperty: Number }>(request);
+            const response = await router.route(request);
 
             if (response.ok) {
-                expect(response.value._testProperty).to.equal(-123);
+                expect(response.value.get<Number>('_testProperty')).to.equal(-123);
             } else {
                 expect.fail('Router did not return successful result');
             }
@@ -52,8 +52,8 @@ describe('CommandMediator', function () {
             const key = 'test';
             const request: CommandRequest = { key };
             const passthroughMiddleware: Middleware = createSuccessMiddleware(() => { wasMiddlewareCalled = true; });
-            const command: CommandHandler<{ _testProperty: Number }> = {
-                handle: async () => ({ ok: true, value: { _testProperty: -123 } })
+            const command: CommandHandler = {
+                handle: async () => ({ ok: true, value: new ViewBag({ _testProperty: -123 }) })
             };
             const commandMap: CommandMap = {
                 [key]: {
@@ -73,7 +73,7 @@ describe('CommandMediator', function () {
             const key = 'test';
             const request: CommandRequest = { key };
             const passthroughMiddleware: Middleware = createSuccessMiddleware();
-            const command: CommandHandler<void> = {
+            const command: CommandHandler = {
                 handle: async () => {
                     wasHandlerCalled = true;
                     return { ok: true, value: null };
@@ -98,7 +98,7 @@ describe('CommandMediator', function () {
             const request: CommandRequest = { key };
             const passthroughMiddleware: Middleware = createSuccessMiddleware();
             const failMiddleware: Middleware = createFailingMiddleware();
-            const command: CommandHandler<void> = {
+            const command: CommandHandler = {
                 handle: async () => {
                     wasHandlerCalled = true;
                     return { ok: true, value: null };

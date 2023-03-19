@@ -1,11 +1,11 @@
 import { Given, Then, When } from '@cucumber/cucumber';
 import { expect } from 'chai';
 import { AuthenticateUserCommand } from './AuthenticateUserCommand';
-import { AuthenticateUserRequest } from "./AuthenticateUserRequest";
-import { Result } from '../../../../Shared/Application/Result/Result';
+import { AuthenticateUserRequest } from './AuthenticateUserRequest';
+import { CommandResponse } from '../../../../Shared/Application/Command/CommandResponse';
 
 const useCase = new AuthenticateUserCommand();
-let response: Result<string> | null = null;
+let response: CommandResponse | null = null;
 
 Given('I have not authenticated myself yet', function () {
 });
@@ -18,9 +18,10 @@ When(/^I go to authenticate myself as (.*)$/, async function (name: string) {
 });
 
 Then(/I should be authenticated as (.*)/, function (name: string) {
-    if(response.ok === false) {
+    if (response.ok === false) {
         expect.fail('Did not expect response to fail');
     }
 
-    expect(response.value).to.equal(name);
+
+    expect(response.value.get<string>('name')).to.equal(name);
 });
